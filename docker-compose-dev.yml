@@ -1,0 +1,15 @@
+version: "3"
+services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./packages/nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./packages/api

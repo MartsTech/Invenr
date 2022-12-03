@@ -6,11 +6,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07107054-2db8-4fd1-a523-d263b7ae5b06" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Invenr/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Invenr/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Invenr/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WebApi/Features/BaseApiController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/WebApi/Features/BaseApiController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WebApi/Services/Authentication/AuthenticationExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/WebApi/Services/Authentication/AuthenticationExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WebApi/Services/Swagger/SwaggerExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/WebApi/Services/Swagger/SwaggerExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Invenr/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Invenr/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WebApi/.dockerignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WebApi/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WebApi/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/WebApi/Properties/launchSettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +81,7 @@
       <workItem from="1670081377970" duration="2474000" />
       <workItem from="1670084292859" duration="1891000" />
       <workItem from="1670086436092" duration="2568000" />
+      <workItem from="1670091773866" duration="80000" />
     </task>
     <servers />
   </component>
