@@ -5,7 +5,7 @@ using Microsoft.Identity.Web.Resource;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
+[RequiredScope("user")]
 public abstract class BaseApiController : ControllerBase
 {
     
