@@ -1,0 +1,12 @@
+version: "3"
+services:
+  api:
+    image: "martstech/invenr-api"
+    mem_limit: 128m
+    hostname: api
+  nginx:
+    image: "martstech/invenr-nginx"
+    mem_limit: 128m
+    hostname: nginx
+    ports:
+      - "80:80"
