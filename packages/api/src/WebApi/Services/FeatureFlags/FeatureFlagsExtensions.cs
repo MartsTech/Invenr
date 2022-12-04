@@ -1,6 +1,8 @@
 ﻿using Microsoft.FeatureManagement;
 
-namespace WebApi.Services.FeatureFlags;
+using Microsoft.FeatureManagement;
+
+namespace WebAPI.Services.FeatureFlags;
 
 public static class FeatureFlagsExtensions
 {

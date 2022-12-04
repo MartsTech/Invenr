@@ -1,4 +1,4 @@
-namespace WebApi.Features.WeatherForecasts.GetWeatherForecast;
+namespace WebAPI.Features.WeatherForecasts.GetWeatherForecast;
 
 public class WeatherForecast
 {

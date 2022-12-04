@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.FeatureManagement;
 using Microsoft.FeatureManagement.Mvc;
 
-namespace WebApi.Services.FeatureFlags;
+namespace WebAPI.Services.FeatureFlags;
 
 public sealed class FeatureFlagsControllerFeatureProvider : IApplicationFeatureProvider<ControllerFeature>
 {

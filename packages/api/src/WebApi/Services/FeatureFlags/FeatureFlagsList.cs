@@ -1,7 +1,6 @@
-﻿namespace WebApi.Services.FeatureFlags;
+﻿namespace WebAPI.Services.FeatureFlags;
 
 public enum FeatureFlagsList
 {
     Swagger,
-    Authentication
 }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.FeatureManagement;
-using WebApi.Services.FeatureFlags;
+using WebAPI.Services.FeatureFlags;
 using Microsoft.OpenApi.Models;
 
-namespace WebApi.Services.Swagger;
+namespace WebAPI.Services.Swagger;
 
 public static class SwaggerExtensions
 {

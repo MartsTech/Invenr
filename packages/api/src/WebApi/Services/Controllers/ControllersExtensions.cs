@@ -2,16 +2,16 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.Formatters;
 
-namespace WebApi.Services.Controllers;
+namespace WebAPI.Services.Controllers;
 
 public static class ControllersExtensions
 {
     public static IServiceCollection AddCustomControllers(this IServiceCollection services)
     {
         services.AddRouting(options =>
-            {
-                options.LowercaseUrls = true;
-            });
+        {
+            options.LowercaseUrls = true;
+        });
         
         services.AddHttpContextAccessor();
         

@@ -1,12 +1,10 @@
-using WebApi.Services.Authentication;
-using WebApi.Services.Controllers;
-using WebApi.Services.FeatureFlags;
-using WebApi.Services.Swagger;
+using WebAPI.Services.Controllers;
+using WebAPI.Services.FeatureFlags;
+using WebAPI.Services.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddFeatureFlags(builder.Configuration);
-builder.Services.AddAuthentication(builder.Configuration);
 builder.Services.AddCustomControllers();
 builder.Services.AddSwagger();
 
@@ -21,7 +19,6 @@ app.UseHttpsRedirection();
 
 app.UseCustomSwagger();
 
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

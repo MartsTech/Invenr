@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Features.WeatherForecasts.GetWeatherForecast;
+namespace WebAPI.Features.WeatherForecasts.GetWeatherForecast;
 
 public class WeatherForecastController : BaseApiController
 {
-    private static readonly string[] Summaries = {
+    private static readonly string[] Summaries =
+    {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
