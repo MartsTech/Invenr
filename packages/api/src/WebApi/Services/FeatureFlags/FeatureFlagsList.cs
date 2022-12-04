@@ -3,4 +3,5 @@
 public enum FeatureFlagsList
 {
     Swagger,
+    ErrorFilter
 }

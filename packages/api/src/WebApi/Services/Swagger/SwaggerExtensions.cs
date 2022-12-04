@@ -1,6 +1,9 @@
-﻿using Microsoft.FeatureManagement;
-using WebAPI.Services.FeatureFlags;
+﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.Options;
+using Microsoft.FeatureManagement;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using WebAPI.Services.FeatureFlags;
 
 namespace WebAPI.Services.Swagger;
 
@@ -21,7 +24,8 @@ public static class SwaggerExtensions
         {
             return services;
         }
-        
+
+        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
         {
@@ -54,7 +58,7 @@ public static class SwaggerExtensions
         return services;
     }
     
-    public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app)
+    public static IApplicationBuilder UseCustomSwagger(this IApplicationBuilder app, IConfiguration config)
     {
         var featureManager = app.ApplicationServices
             .GetRequiredService<IFeatureManager>();
@@ -70,8 +74,22 @@ public static class SwaggerExtensions
             return app;
         }
         
+        var provider = app.ApplicationServices.GetRequiredService<IApiVersionDescriptionProvider>();
+        
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(options =>
+        {
+            foreach (var description in provider.ApiVersionDescriptions)
+            {
+                var basePath = config["ASPNETCORE_BASEPATH"];
+
+                var swaggerEndpoint = !string.IsNullOrEmpty(basePath) 
+                    ? $"{basePath}/swagger/{description.GroupName}/swagger.json" 
+                    : $"/swagger/{description.GroupName}/swagger.json";
+
+                options.SwaggerEndpoint(swaggerEndpoint, description.GroupName.ToUpperInvariant());
+            }
+        });
 
         return app;
     }

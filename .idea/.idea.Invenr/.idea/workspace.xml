@@ -6,35 +6,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7967f29a-dc8a-4fe9-9a8d-3c4e5a8cef1d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-dev.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/.idea/.idea.Invenr/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/.idea/.idea.Invenr/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/.idea/.idea.Invenr/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/.idea/.idea.Invenr/.idea/projectSettingsUpdater.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/.idea/.idea.Invenr/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/.idea/.idea.Invenr/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/Dockerfile.dev" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/Invenr.sln" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Features/BaseApiController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Features/WeatherForecasts/GetWeatherForecast/WeatherForecast.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Features/WeatherForecasts/GetWeatherForecast/WeatherForecastController.cs" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/api/src/WebApi/Services/Cors/CorsExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/api/src/WebApi/Services/Exceptions/ExceptionFilter.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/api/src/WebApi/Services/Logging/LoggingExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/api/src/WebApi/Services/Swagger/ConfigureSwaggerOptions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/packages/api/src/WebApi/Services/Versioning/VersioningExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Invenr/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Invenr/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api/src/WebApi/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api/src/WebApi/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Services/Authentication/AuthenticationExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Services/Controllers/ControllersExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Services/FeatureFlags/FeatureFlagsControllerFeatureProvider.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Services/FeatureFlags/FeatureFlagsExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Services/FeatureFlags/FeatureFlagsList.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Services/Swagger/SwaggerExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Services/Controllers/ControllersExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api/src/WebApi/Services/Controllers/ControllersExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Services/FeatureFlags/FeatureFlagsList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api/src/WebApi/Services/FeatureFlags/FeatureFlagsList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/Services/Swagger/SwaggerExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api/src/WebApi/Services/Swagger/SwaggerExtensions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/WebApi.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api/src/WebApi/WebApi.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api/src/WebApi/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/appsettings.Production.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/nginx/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/nginx/Dockerfile.dev" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/nginx/default.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/packages/api/src/WebApi/appsettings.Production.json" beforeDir="false" afterPath="$PROJECT_DIR$/packages/api/src/WebApi/appsettings.Production.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,15 +33,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.WebAPI">
     <configuration name="WebAPI" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/packages/api/src/WebAPI/WebAPI.csproj" />
@@ -99,6 +83,7 @@
       <option name="presentableId" value="Default" />
       <updated>1670173339325</updated>
       <workItem from="1670173342974" duration="1658000" />
+      <workItem from="1670175056470" duration="2384000" />
     </task>
     <servers />
   </component>
