@@ -1,0 +1,7 @@
+﻿{ 
+  "DefaultDownstreamScheme": "https",
+  "Routes": [],
+  "GlobalConfiguration": {
+    "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+  }
+}
