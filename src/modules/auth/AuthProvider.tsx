@@ -15,7 +15,7 @@ const AuthProvider: FC<Props> = ({children}) => {
   );
 };
 
-const Provider: FC<Partial<Props>> = ({children}) => {
+const Provider: FC<Props> = ({children}) => {
   const dispatch = useStoreDispatch();
 
   const signed = useStoreSelector(authSignedSelector);

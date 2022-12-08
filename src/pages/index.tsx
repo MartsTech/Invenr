@@ -3,16 +3,26 @@ import {
   useAuthSignInMutation,
   useAuthSignOutMutation,
 } from 'modules/auth/auth-api';
-import {authSignedSelector} from 'modules/auth/auth-state';
+import {authSessionSelector, authSignedSelector} from 'modules/auth/auth-state';
 
 const HomePage = () => {
   const signed = useStoreSelector(authSignedSelector);
+  const session = useStoreSelector(authSessionSelector);
 
   const [authSignIn] = useAuthSignInMutation();
   const [authSignOut] = useAuthSignOutMutation();
 
-  if (signed) {
-    return <button onClick={() => authSignOut()}>Sign Out</button>;
+  if (signed && session) {
+    return (
+      <div>
+        <button onClick={() => authSignOut()}>Sign Out</button>
+        <p>{session.expires}</p>
+        <p>{session.user?.email}</p>
+        <p>{session.user?.image}</p>
+        <p>{session.user?.name}</p>
+        <p>{session.accessToken}</p>
+      </div>
+    );
   }
 
   return <button onClick={() => authSignIn()}>Sign In</button>;
