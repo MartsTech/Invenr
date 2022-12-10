@@ -35,6 +35,7 @@ const AuthHandler: NextApiHandler = (req, res) => {
     callbacks: {
       jwt: ({token, account, user}) => {
         if (account && user) {
+          token.userId = user.id;
           token.refreshToken = account.refresh_token;
           token.accessToken = account.access_token;
           token.accessTokenExpires =
@@ -49,6 +50,7 @@ const AuthHandler: NextApiHandler = (req, res) => {
         return refreshAccessToken(token);
       },
       session: ({session, token}) => {
+        session.user.id = token.userId;
         session.refreshToken = token.refreshToken;
         session.accessToken = token.accessToken;
         session.accessTokenExpires = token.accessTokenExpires;

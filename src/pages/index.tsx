@@ -16,13 +16,11 @@ const HomePage = () => {
     return (
       <div>
         <button onClick={() => authSignOut()}>Sign Out</button>
-        <p>{session.expires}</p>
+        <p>{session.user?.id}</p>
+        <p>{session.user?.name}</p>
         <p>{session.user?.email}</p>
         <p>{session.user?.image}</p>
-        <p>{session.user?.name}</p>
-        <p>{session.accessToken}</p>
-        <p>{session.accessTokenExpires}</p>
-        <p>{session.refreshToken}</p>
+        <p>{session.expires}</p>
       </div>
     );
   }
