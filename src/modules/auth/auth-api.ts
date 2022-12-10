@@ -1,7 +1,7 @@
-import {baseApi} from 'lib/api';
+import {api} from 'lib/api';
 import {signIn, signOut} from 'next-auth/react';
 
-const authApi = baseApi.injectEndpoints({
+const authApi = api.injectEndpoints({
   endpoints: builder => ({
     // ================= Sign In =====================
     authSignIn: builder.mutation<void, void>({

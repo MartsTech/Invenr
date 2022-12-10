@@ -1,6 +1,6 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {setupListeners} from '@reduxjs/toolkit/dist/query';
-import {baseApi} from 'lib/api';
+import {api} from 'lib/api';
 import {authPersistedReducer} from 'modules/auth/auth-state';
 import logger from 'redux-logger';
 import {
@@ -14,7 +14,7 @@ import {
 } from 'redux-persist';
 
 export const rootReducer = combineReducers({
-  [baseApi.reducerPath]: baseApi.reducer,
+  [api.reducerPath]: api.reducer,
   auth: authPersistedReducer,
 });
 
@@ -25,7 +25,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(baseApi.middleware, logger),
+    }).concat(api.middleware, logger),
 });
 
 setupListeners(store.dispatch);
