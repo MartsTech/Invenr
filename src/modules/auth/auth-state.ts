@@ -19,6 +19,10 @@ export const authLogin = createAction<{session: AuthSession}>('auth/login');
 
 export const authLogout = createAction('auth/logout');
 
+export const authSessionChanged = createAction<AuthSession>(
+  'auth/sessionChanged',
+);
+
 // ================= Reducers =====================
 export const authReducer = createReducer(initialState, builder => {
   builder.addCase(authLogin, (state, action) => {
@@ -26,6 +30,9 @@ export const authReducer = createReducer(initialState, builder => {
   });
   builder.addCase(authLogout, state => {
     state.session = null;
+  });
+  builder.addCase(authSessionChanged, (state, action) => {
+    state.session = action.payload;
   });
 });
 

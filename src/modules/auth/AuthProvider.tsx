@@ -1,7 +1,14 @@
 import {useStoreDispatch, useStoreSelector} from 'lib/store/store-hooks';
 import {SessionProvider, useSession} from 'next-auth/react';
 import {FC, ReactNode, useEffect} from 'react';
-import {authLogin, authLogout, authSignedSelector} from './auth-state';
+import {
+  authLogin,
+  authLogout,
+  authSessionChanged,
+  authSessionSelector,
+  authSignedSelector,
+} from './auth-state';
+import {authSessionDifference} from './auth-utils';
 
 interface Props {
   children: ReactNode;
@@ -19,6 +26,7 @@ const Provider: FC<Props> = ({children}) => {
   const dispatch = useStoreDispatch();
 
   const signed = useStoreSelector(authSignedSelector);
+  const session = useStoreSelector(authSessionSelector);
 
   const {data, status} = useSession();
 
@@ -29,6 +37,12 @@ const Provider: FC<Props> = ({children}) => {
       dispatch(authLogout());
     }
   }, [status, data, signed, dispatch]);
+
+  useEffect(() => {
+    if (signed && data && session && authSessionDifference(data, session)) {
+      dispatch(authSessionChanged(data));
+    }
+  }, [signed, data, session, dispatch]);
 
   return <>{children}</>;
 };
