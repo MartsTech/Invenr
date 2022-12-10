@@ -21,6 +21,8 @@ const HomePage = () => {
         <p>{session.user?.image}</p>
         <p>{session.user?.name}</p>
         <p>{session.accessToken}</p>
+        <p>{session.accessTokenExpires}</p>
+        <p>{session.refreshToken}</p>
       </div>
     );
   }

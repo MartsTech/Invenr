@@ -1,5 +1,3 @@
 import type {Session} from 'next-auth';
 
-export interface AuthSession extends Session {
-  accessToken: string;
-}
+export interface AuthSession extends Session {}
