@@ -1,3 +1,5 @@
+import {PrismaAdapter} from '@next-auth/prisma-adapter';
+import dbClient from 'lib/db';
 import type {NextApiHandler} from 'next';
 import NextAuth, {NextAuthOptions} from 'next-auth';
 import type {JWT} from 'next-auth/jwt';
@@ -5,6 +7,7 @@ import GoogleProvider from 'next-auth/providers/google';
 
 const AuthHandler: NextApiHandler = (req, res) => {
   const options: NextAuthOptions = {
+    adapter: PrismaAdapter(dbClient),
     providers: [
       GoogleProvider({
         clientId: process.env.GOOGLE_CLIENT_ID,
