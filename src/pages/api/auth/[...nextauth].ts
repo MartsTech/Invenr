@@ -32,6 +32,9 @@ const AuthHandler: NextApiHandler = (req, res) => {
     session: {
       strategy: 'jwt',
     },
+    pages: {
+      signIn: '/login',
+    },
     callbacks: {
       jwt: ({token, account, user}) => {
         if (account && user) {

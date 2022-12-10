@@ -1,15 +1,12 @@
 import {useStoreSelector} from 'lib/store/store-hooks';
-import {
-  useAuthSignInMutation,
-  useAuthSignOutMutation,
-} from 'modules/auth/auth-api';
+import {useAuthSignOutMutation} from 'modules/auth/auth-api';
 import {authSessionSelector, authSignedSelector} from 'modules/auth/auth-state';
+import Link from 'next/link';
 
 const HomePage = () => {
   const signed = useStoreSelector(authSignedSelector);
   const session = useStoreSelector(authSessionSelector);
 
-  const [authSignIn] = useAuthSignInMutation();
   const [authSignOut] = useAuthSignOutMutation();
 
   if (signed && session) {
@@ -25,6 +22,6 @@ const HomePage = () => {
     );
   }
 
-  return <button onClick={() => authSignIn()}>Sign In</button>;
+  return <Link href="/login">Sign In</Link>;
 };
 export default HomePage;
