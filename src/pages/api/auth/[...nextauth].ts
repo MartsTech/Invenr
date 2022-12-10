@@ -1,13 +1,12 @@
 import {PrismaAdapter} from '@next-auth/prisma-adapter';
-import dbClient from 'lib/db';
+import db from 'lib/db';
 import type {NextApiHandler} from 'next';
 import NextAuth, {NextAuthOptions} from 'next-auth';
-import type {JWT} from 'next-auth/jwt';
+import {JWT} from 'next-auth/jwt';
 import GoogleProvider from 'next-auth/providers/google';
 
 const AuthHandler: NextApiHandler = (req, res) => {
   const options: NextAuthOptions = {
-    adapter: PrismaAdapter(dbClient),
     providers: [
       GoogleProvider({
         clientId: process.env.GOOGLE_CLIENT_ID,
@@ -18,35 +17,41 @@ const AuthHandler: NextApiHandler = (req, res) => {
             prompt: 'consent',
             access_type: 'offline',
             response_type: 'code',
-            scope: process.env.GOOGLE_SCOPE,
+            scope: [
+              'openid',
+              'https://www.googleapis.com/auth/userinfo.email',
+              'https://www.googleapis.com/auth/userinfo.profile',
+              'https://www.googleapis.com/auth/calendar',
+            ].join(' '),
           },
         },
       }),
     ],
-    secret: process.env.NEXTAUTH_JWT_SECRET,
+    adapter: PrismaAdapter(db),
+    secret: process.env.NEXTAUTH_SECRET,
+    session: {
+      strategy: 'jwt',
+    },
     callbacks: {
-      jwt: async ({token, account, user}) => {
+      jwt: ({token, account, user}) => {
         if (account && user) {
           token.refreshToken = account.refresh_token;
           token.accessToken = account.access_token;
           token.accessTokenExpires =
             Date.now() + (account.expires_at ?? 0) * 1000;
         }
-
         if (
           typeof token.accessTokenExpires !== 'undefined' &&
           Date.now() < token.accessTokenExpires
         ) {
           return token;
         }
-
         return refreshAccessToken(token);
       },
-      session: async ({session, token}) => {
+      session: ({session, token}) => {
         session.refreshToken = token.refreshToken;
         session.accessToken = token.accessToken;
         session.accessTokenExpires = token.accessTokenExpires;
-
         return session;
       },
     },
