@@ -1,5 +1,0 @@
-{
-  "*.{ts,tsx}": ["bash -c yarn check-types"],
-  "*.{js,jsx,ts,tsx}": ["yarn check-lint"],
-  "*.{json,md,html,js,jsx,ts,tsx}": ["yarn check-format"]
-}
