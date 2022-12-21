@@ -1,5 +1,5 @@
 import {PrismaAdapter} from '@next-auth/prisma-adapter';
-import db from 'lib/db';
+import {prisma} from 'database';
 import type {NextApiHandler} from 'next';
 import NextAuth, {NextAuthOptions} from 'next-auth';
 import {JWT} from 'next-auth/jwt';
@@ -27,7 +27,7 @@ const AuthHandler: NextApiHandler = (req, res) => {
         },
       }),
     ],
-    adapter: PrismaAdapter(db),
+    adapter: PrismaAdapter(prisma),
     secret: process.env.NEXTAUTH_SECRET,
     session: {
       strategy: 'jwt',

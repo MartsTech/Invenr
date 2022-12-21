@@ -7,8 +7,6 @@ declare global {
       GOOGLE_CLIENT_ID: string;
       GOOGLE_CLIENT_SECRET: string;
       GOOGLE_CALENDAR_API_KEY: string;
-      DATABASE_URL: string;
-      SHADOW_DATABASE_URL: string;
     }
   }
 }

@@ -2,7 +2,7 @@ import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {setupListeners} from '@reduxjs/toolkit/dist/query';
 import {api} from 'lib/api';
 import {authPersistedReducer} from 'modules/auth/auth-state';
-import logger from 'redux-logger';
+import {createLogger} from 'redux-logger';
 import {
   FLUSH,
   PAUSE,
@@ -12,6 +12,11 @@ import {
   REGISTER,
   REHYDRATE,
 } from 'redux-persist';
+
+const logger = createLogger({
+  diff: true,
+  collapsed: true,
+});
 
 export const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,

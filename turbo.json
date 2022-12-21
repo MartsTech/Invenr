@@ -1,0 +1,44 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["NODE_ENV"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "web#build": {
+      "dependsOn": ["^build"],
+      "env": [
+        "NEXT_PUBLIC_API_URL",
+        "NEXTAUTH_URL",
+        "NEXTAUTH_SECRET",
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
+        "GOOGLE_CALENDAR_API_KEY"
+      ]
+    },
+    "database#build": {
+      "dependsOn": ["^build"],
+      "env": ["DATABASE_URL", "SHADOW_DATABASE_URL"]
+    },
+    "dev": {
+      "cache": false
+    },
+    "db:migrate:deploy": {
+      "outputs": []
+    },
+    "db:push": {
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "clean": {
+      "cache": false
+    },
+    "generate": {
+      "dependsOn": ["^generate"]
+    }
+  },
+  "globalDependencies": [".env"]
+}

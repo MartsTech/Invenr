@@ -1,4 +1,4 @@
-import db from 'lib/db';
+import {prisma} from 'database';
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {getSession} from 'next-auth/react';
 
@@ -9,7 +9,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json({error: 'Not authenticated'});
   }
 
-  const user = await db.user.findFirst({
+  const user = await prisma.user.findFirst({
     where: {
       id: session.user.id,
     },
