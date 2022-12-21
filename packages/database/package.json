@@ -1,5 +1,5 @@
 {
-  "name": "invenr-database",
+  "name": "database",
   "version": "0.0.1",
   "license": "GPL-3.0",
   "main": "./dist/index.js",
@@ -17,6 +17,7 @@
     "dev": "tsup --watch",
     "format": "prisma format",
     "generate": "prisma generate",
+    "lint": "eslint \"src/**/*.ts\"",
     "prebuild": "yarn run generate",
     "predev": "yarn run generate",
     "studio": "prisma studio"

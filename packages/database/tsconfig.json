@@ -1,6 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "lib": ["ES2021"],
+    "module": "commonjs",
+    "target": "ES2021",
     "composite": false,
     "declaration": true,
     "declarationMap": true,
@@ -13,10 +16,7 @@
     "noUnusedParameters": false,
     "preserveWatchOutput": true,
     "skipLibCheck": true,
-    "strict": true,
-    "lib": ["ES2021"],
-    "module": "commonjs",
-    "target": "ES2021"
+    "strict": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "tsup.config.ts"],
   "exclude": ["node_modules"]
