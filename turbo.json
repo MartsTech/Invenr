@@ -18,6 +18,9 @@
     "lint": {
       "outputs": []
     },
+    "clean": {
+      "cache": false
+    },
     "generate": {
       "dependsOn": ["^generate"]
     }

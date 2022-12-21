@@ -17,6 +17,7 @@
     "db:push": "turbo run db:push",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
+    "clean": "turbo run clean",
     "generate": "turbo run generate"
   },
   "devDependencies": {
