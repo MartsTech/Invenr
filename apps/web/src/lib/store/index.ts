@@ -1,4 +1,4 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit';
+import {combineReducers, configureStore, Middleware} from '@reduxjs/toolkit';
 import {setupListeners} from '@reduxjs/toolkit/dist/query';
 import {api} from 'lib/api';
 import {authPersistedReducer} from 'modules/auth/auth-state';
@@ -13,10 +13,16 @@ import {
   REHYDRATE,
 } from 'redux-persist';
 
-const logger = createLogger({
-  diff: true,
-  collapsed: true,
-});
+const middlewares: Middleware[] = [];
+
+if (process.env.NODE_ENV === `development`) {
+  const logger = createLogger({
+    diff: true,
+    collapsed: true,
+  });
+
+  middlewares.push(logger);
+}
 
 export const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
@@ -30,7 +36,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(api.middleware, logger),
+    }).concat(api.middleware, ...middlewares),
 });
 
 setupListeners(store.dispatch);
