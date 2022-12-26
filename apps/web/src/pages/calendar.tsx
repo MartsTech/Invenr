@@ -1,25 +1,68 @@
+import {useCalendarListQuery} from 'modules/calendarList/calendarList-api';
+import {useLazyEventsQuery} from 'modules/events/events-api';
+import type {CalendarEvent} from 'modules/events/events-types';
 import PageProvider from 'modules/page/PageProvider';
 import type {NextPage} from 'next';
-import {Calendar} from 'ui';
+import {useEffect, useMemo, useState} from 'react';
+import {Calendar, CalendarAppointment, CalendarResource} from 'ui';
 
 const CalendarPage: NextPage = () => {
+  const {data: calendarList} = useCalendarListQuery();
+  const [eventsQuery] = useLazyEventsQuery();
+
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
+
+  useEffect(() => {
+    if (calendarList?.length) {
+      eventsQuery({calendarIds: calendarList.map(item => item.id).join(',')})
+        .unwrap()
+        .then(setEvents);
+    }
+  }, [calendarList, eventsQuery]);
+
+  const currentDate: string = useMemo(() => new Date().toISOString(), []);
+
+  const appointments: CalendarAppointment[] = useMemo(
+    () =>
+      events?.map(item => ({
+        id: item.id,
+        startDate: item.start.dateTime,
+        endDate: item.end.dateTime,
+        title: item.summary,
+        allDay: item.allDay,
+        calendarId: item.calendarId,
+      })) || [],
+    [events],
+  );
+
+  const resources: CalendarResource[] = useMemo(
+    () => [
+      {
+        fieldName: 'calendarId',
+        title: 'Calendar Id',
+        instances:
+          calendarList?.map(item => ({
+            id: item.id,
+            text: item.summary,
+            color: item.backgroundColor,
+          })) || [],
+      } as CalendarResource,
+    ],
+    [calendarList],
+  );
+
   return (
     <PageProvider>
       <Calendar
-        data={[
-          {
-            startDate: '2022-12-26T09:45',
-            endDate: '2022-12-26T11:00',
-            title: 'Meeting',
-          },
-          {
-            startDate: '2022-12-26T12:00',
-            endDate: '2022-12-26T13:30',
-            title: 'Go to a gym',
-          },
-        ]}
-        currentDate={new Date().getTime()}
+        currentDate={currentDate}
+        appointments={appointments}
+        resources={resources}
       />
+      <div>
+        {calendarList?.map(item => (
+          <p key={item.id}>{item.summary}</p>
+        ))}
+      </div>
     </PageProvider>
   );
 };

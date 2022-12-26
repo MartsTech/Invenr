@@ -1,9 +1,18 @@
 import {calendar} from '@googleapis/calendar';
 import {auth} from '@googleapis/oauth2';
+import type {CalendarListEntry} from 'modules/calendarList/calendarList-types';
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {getSession} from 'next-auth/react';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+type Data =
+  | {
+      items: CalendarListEntry[];
+    }
+  | {
+      error: string;
+    };
+
+const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const session = await getSession({req});
 
   if (!session) {
@@ -28,7 +37,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     auth: authClient,
   });
 
-  res.status(200).json(list);
+  res.status(200).json({
+    items:
+      list.data.items?.map(item => ({
+        id: item.id || '',
+        summary: item.summary || '',
+        colorId: item.colorId || '',
+        backgroundColor: item.backgroundColor || '',
+        foregroundColor: item.foregroundColor || '',
+        selected: item.selected || false,
+        primary: item.primary || false,
+      })) ?? [],
+  });
 };
 
 export default handler;

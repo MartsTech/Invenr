@@ -21,6 +21,9 @@
       "dependsOn": ["^build"],
       "env": ["DATABASE_URL", "SHADOW_DATABASE_URL"]
     },
+    "ui#build": {
+      "dependsOn": ["^build"]
+    },
     "dev": {
       "cache": false
     },
