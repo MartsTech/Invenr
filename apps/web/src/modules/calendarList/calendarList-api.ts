@@ -8,7 +8,7 @@ const calendarListApi = api.injectEndpoints({
     // ================= List =====================
     calendarList: builder.query<CalendarListEntry[], void>({
       query: () => ({
-        url: '/api/calendarList',
+        url: '/calendarList',
         method: apiMethods.GET,
       }),
       async onQueryStarted(_arg, {queryFulfilled, dispatch}) {

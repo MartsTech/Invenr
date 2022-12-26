@@ -8,7 +8,7 @@ const eventApi = api.injectEndpoints({
     // ================= List =====================
     events: builder.query<CalendarEvent[], {calendarIds?: string[]}>({
       query: ({calendarIds}) => ({
-        url: '/api/event',
+        url: '/event',
         method: apiMethods.GET,
         params: {
           calendarIds: calendarIds?.join(','),
