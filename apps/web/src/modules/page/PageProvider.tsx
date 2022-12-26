@@ -20,6 +20,10 @@ const PageProvider: FC<Props> = ({children}) => {
     }
   }, [signed, rounter]);
 
+  if (!signed && rounter.pathname !== '/login') {
+    return null;
+  }
+
   return <>{children}</>;
 };
 
