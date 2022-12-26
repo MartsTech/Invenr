@@ -12,6 +12,7 @@ import {
   Scheduler,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import Paper from '@mui/material/Paper';
+import {styled} from '@mui/system';
 import type {FC} from 'react';
 
 export interface CalendarAppointment extends AppointmentModel {}
@@ -30,7 +31,7 @@ export const Calendar: FC<CalendarProps> = ({
   resources,
 }) => {
   return (
-    <Paper>
+    <StyledPaper>
       <Scheduler data={appointments}>
         <ViewState currentDate={currentDate} />
         <DayView />
@@ -39,8 +40,13 @@ export const Calendar: FC<CalendarProps> = ({
         <AllDayPanel />
         <Resources data={resources} />
       </Scheduler>
-    </Paper>
+    </StyledPaper>
   );
 };
+
+const StyledPaper = styled(Paper)({
+  height: '100vh',
+  overflow: 'hidden',
+});
 
 Calendar.displayName = 'Calendar';
