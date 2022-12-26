@@ -21,7 +21,7 @@
     "generate": "turbo run generate",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build --filter=docs^... && changeset publish",
+    "release": "turbo run build --filter=web^... && changeset publish",
     "prepare": "husky install"
   },
   "devDependencies": {
