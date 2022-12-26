@@ -1,5 +1,6 @@
 import {useStoreSelector} from 'lib/store/store-hooks';
 import {authSignedSelector} from 'modules/auth/auth-state';
+import {AppLayout} from 'modules/layout/AppLayout';
 import {useRouter} from 'next/router';
 import {FC, ReactNode, useEffect} from 'react';
 
@@ -24,7 +25,7 @@ const PageProvider: FC<Props> = ({children}) => {
     return null;
   }
 
-  return <>{children}</>;
+  return <AppLayout>{children}</AppLayout>;
 };
 
 export default PageProvider;
