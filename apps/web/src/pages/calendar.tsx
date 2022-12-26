@@ -1,24 +1,17 @@
+import {useStoreSelector} from 'lib/store/store-hooks';
 import {useCalendarListQuery} from 'modules/calendarList/calendarList-api';
-import {useLazyEventsQuery} from 'modules/events/events-api';
-import type {CalendarEvent} from 'modules/events/events-types';
+import {calendarListSelector} from 'modules/calendarList/calendarList-state';
+import {eventListSelector} from 'modules/event/event-state';
 import PageProvider from 'modules/page/PageProvider';
 import type {NextPage} from 'next';
-import {useEffect, useMemo, useState} from 'react';
+import {useMemo} from 'react';
 import {Calendar, CalendarAppointment, CalendarResource} from 'ui';
 
 const CalendarPage: NextPage = () => {
-  const {data: calendarList} = useCalendarListQuery();
-  const [eventsQuery] = useLazyEventsQuery();
+  useCalendarListQuery();
 
-  const [events, setEvents] = useState<CalendarEvent[]>([]);
-
-  useEffect(() => {
-    if (calendarList?.length) {
-      eventsQuery({calendarIds: calendarList.map(item => item.id).join(',')})
-        .unwrap()
-        .then(setEvents);
-    }
-  }, [calendarList, eventsQuery]);
+  const calendarList = useStoreSelector(calendarListSelector);
+  const events = useStoreSelector(eventListSelector);
 
   const currentDate: string = useMemo(() => new Date().toISOString(), []);
 

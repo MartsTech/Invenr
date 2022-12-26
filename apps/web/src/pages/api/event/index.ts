@@ -1,6 +1,6 @@
 import {calendar} from '@googleapis/calendar';
 import {auth} from '@googleapis/oauth2';
-import type {CalendarEvent} from 'modules/events/events-types';
+import type {CalendarEvent} from 'modules/event/event-types';
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {getSession} from 'next-auth/react';
 
@@ -12,7 +12,7 @@ interface ExtendedNextApiRequest extends NextApiRequest {
 
 type Data =
   | {
-      items: CalendarEvent[];
+      data: CalendarEvent[];
     }
   | {
       error: string;
@@ -61,7 +61,7 @@ const handler = async (
 
   const calendarIds = req.query?.calendarIds?.split(',') || ['primary'];
 
-  const events = await Promise.all(
+  const list = await Promise.all(
     calendarIds.map(async calendarId => {
       const items = await calendar({
         version: 'v3',
@@ -74,36 +74,40 @@ const handler = async (
         orderBy: 'startTime',
         auth: authClient,
       });
-
       return {items, calendarId};
     }),
   );
 
-  const list = events.flatMap(calendarEvents =>
-    calendarEvents.items.data.items?.map(item => ({
-      ...item,
-      calendarId: calendarEvents.calendarId,
+  const events = list.flatMap(x =>
+    x.items.data.items?.map(y => ({
+      ...y,
+      calendarId: x.calendarId,
     })),
   );
 
-  res.status(200).json({
-    items:
-      list.map(item => ({
-        id: item?.id || '',
-        htmlLink: item?.htmlLink || '',
-        summary: item?.summary || '',
-        start: {
-          dateTime: item?.start?.dateTime || timeMin,
-        },
-        end: {
-          dateTime: item?.end?.dateTime || timeMax,
-        },
-        allDay:
-          typeof item?.start?.dateTime !== 'string' &&
-          typeof item?.end?.dateTime !== 'string',
-        calendarId: item?.calendarId || '',
-      })) || [],
-  });
+  const data: CalendarEvent[] =
+    events.map(item => ({
+      id: item?.id || '',
+      htmlLink: item?.htmlLink || '',
+      summary: item?.summary || '',
+      start: {
+        dateTime: item?.start?.dateTime || timeMin,
+      },
+      end: {
+        dateTime: item?.end?.dateTime || timeMax,
+      },
+      allDay:
+        typeof item?.start?.dateTime !== 'string' &&
+        typeof item?.end?.dateTime !== 'string',
+      calendarId: item?.calendarId || '',
+    })) || [];
+
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=600, stale-while-revalidate=1000',
+  );
+
+  res.status(200).json({data});
 };
 
 export default handler;

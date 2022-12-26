@@ -1,5 +1,6 @@
 import {api} from 'lib/api';
-import {apiMethods} from 'lib/api/api-constants';
+import {apiMethods, apiStatuses} from 'lib/api/api-constants';
+import {calendarListLoaded} from './calendarList-state';
 import type {CalendarListEntry} from './calendarList-types';
 
 const calendarListApi = api.injectEndpoints({
@@ -10,8 +11,15 @@ const calendarListApi = api.injectEndpoints({
         url: '/api/calendarList',
         method: apiMethods.GET,
       }),
-      transformResponse: (response: {items: CalendarListEntry[]}) =>
-        response.items,
+      async onQueryStarted(_arg, {queryFulfilled, dispatch}) {
+        const result = await queryFulfilled;
+        if (result.meta?.response?.status === apiStatuses.STATUS_200) {
+          dispatch(calendarListLoaded(result.data));
+        }
+      },
+      transformResponse: (response: {data: CalendarListEntry[]}) =>
+        response.data,
+      providesTags: ['CalendarListEntry'],
     }),
   }),
 });

@@ -6,7 +6,7 @@ import {getSession} from 'next-auth/react';
 
 type Data =
   | {
-      items: CalendarListEntry[];
+      data: CalendarListEntry[];
     }
   | {
       error: string;
@@ -30,25 +30,30 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     refresh_token: session.refreshToken,
   });
 
-  const list = await calendar({
+  const calendarList = await calendar({
     version: 'v3',
     auth: process.env.GOOGLE_CALENDAR_API_KEY,
   }).calendarList.list({
     auth: authClient,
   });
 
-  res.status(200).json({
-    items:
-      list.data.items?.map(item => ({
-        id: item.id || '',
-        summary: item.summary || '',
-        colorId: item.colorId || '',
-        backgroundColor: item.backgroundColor || '',
-        foregroundColor: item.foregroundColor || '',
-        selected: item.selected || false,
-        primary: item.primary || false,
-      })) ?? [],
-  });
+  const data: CalendarListEntry[] =
+    calendarList.data.items?.map(item => ({
+      id: item.id || '',
+      summary: item.summary || '',
+      colorId: item.colorId || '',
+      backgroundColor: item.backgroundColor || '',
+      foregroundColor: item.foregroundColor || '',
+      selected: item.selected || false,
+      primary: item.primary || false,
+    })) ?? [];
+
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=600, stale-while-revalidate=1000',
+  );
+
+  res.status(200).json({data});
 };
 
 export default handler;
