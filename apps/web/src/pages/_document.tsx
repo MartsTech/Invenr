@@ -1,7 +1,7 @@
 import NextDocument, {Head, Html, Main, NextScript} from 'next/document';
 
-const APP_NAME = 'Invenr';
-const APP_DESCRIPTION =
+export const APP_NAME = 'Invenr';
+export const APP_DESCRIPTION =
   'Invenr is a web application for managing your calendar';
 
 class Document extends NextDocument {
@@ -27,7 +27,6 @@ class Document extends NextDocument {
           />
           <link rel="manifest" href="/manifest.json" />
           <link rel="shortcut icon" href="/favicon.ico" />
-          <title>{APP_NAME}</title>
         </Head>
         <body>
           <Main />
