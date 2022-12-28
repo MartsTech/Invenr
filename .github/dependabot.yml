@@ -1,18 +1,18 @@
 version: 2
 updates:
-  - package-ecosystem: 'yarn'
+  - package-ecosystem: 'npm'
     directory: '/'
     schedule:
       interval: 'weekly'
-  - package-ecosystem: 'yarn'
+  - package-ecosystem: 'npm'
     directory: '/apps/web'
     schedule:
       interval: 'weekly'
-  - package-ecosystem: 'yarn'
+  - package-ecosystem: 'npm'
     directory: '/packages/database'
     schedule:
       interval: 'weekly'
-  - package-ecosystem: 'yarn'
+  - package-ecosystem: 'npm'
     directory: '/packages/ui'
     schedule:
       interval: 'weekly'
