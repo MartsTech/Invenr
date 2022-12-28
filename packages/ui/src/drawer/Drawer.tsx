@@ -1,4 +1,3 @@
-import MuiCalendar from '@mui/icons-material/CalendarToday';
 import MuiChevronLeft from '@mui/icons-material/ChevronLeft';
 import MuiChevronRight from '@mui/icons-material/ChevronRight';
 import Divider from '@mui/material/Divider';
@@ -14,16 +13,26 @@ import {normalizeIcon} from '../icon/icon-utils';
 import {closedMixin, drawerWidth, openedMixin} from './drawer-utils';
 import {DrawerHeader} from './DrawerHeader';
 
-const CalendarIcon = normalizeIcon(MuiCalendar);
 const ChevronLeftIcon = normalizeIcon(MuiChevronLeft);
 const ChevronRightIcon = normalizeIcon(MuiChevronRight);
+
+export interface DrawerItem {
+  label: string;
+  icon: React.ReactNode;
+  onClick: () => void;
+}
 
 export interface DrawerProps {
   open: boolean;
   handleDrawerClose: () => void;
+  items: DrawerItem[];
 }
 
-export const Drawer: React.FC<DrawerProps> = ({open, handleDrawerClose}) => {
+export const Drawer: React.FC<DrawerProps> = ({
+  open,
+  handleDrawerClose,
+  items,
+}) => {
   const theme = useTheme();
 
   return (
@@ -39,8 +48,12 @@ export const Drawer: React.FC<DrawerProps> = ({open, handleDrawerClose}) => {
       </DrawerHeader>
       <Divider />
       <List>
-        {['Calendar'].map(text => (
-          <ListItem key={text} disablePadding sx={{display: 'block'}}>
+        {items.map(item => (
+          <ListItem
+            key={item.label}
+            disablePadding
+            sx={{display: 'block'}}
+            onClick={item.onClick}>
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -53,9 +66,9 @@ export const Drawer: React.FC<DrawerProps> = ({open, handleDrawerClose}) => {
                   mr: open ? 3 : 'auto',
                   justifyContent: 'center',
                 }}>
-                {text === 'Calendar' && <CalendarIcon />}
+                {item.icon}
               </ListItemIcon>
-              <ListItemText primary={text} sx={{opacity: open ? 1 : 0}} />
+              <ListItemText primary={item.label} sx={{opacity: open ? 1 : 0}} />
             </ListItemButton>
           </ListItem>
         ))}

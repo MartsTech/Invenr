@@ -45,8 +45,14 @@ export const Calendar: FC<CalendarProps> = ({
 };
 
 const StyledPaper = styled(Paper)({
-  height: '100vh',
-  overflow: 'hidden',
+  '& .Container-container': {
+    scrollbarWidth: 'none',
+    msOverflowStyle: 'none',
+
+    '& ::-webkit-scrollbar': {
+      display: 'none',
+    },
+  },
 });
 
 Calendar.displayName = 'Calendar';
