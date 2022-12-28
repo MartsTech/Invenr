@@ -33,3 +33,7 @@ yarn-error.log*
 # turbo
 .turbo
 dist
+
+# pwa
+**/public/workbox-*.js
+**/public/sw.js
