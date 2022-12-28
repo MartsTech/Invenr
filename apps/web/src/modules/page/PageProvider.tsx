@@ -1,7 +1,9 @@
 import {useStoreSelector} from 'lib/store/store-hooks';
 import {authSignedSelector} from 'modules/auth/auth-state';
 import LoaderModule from 'modules/loader/LoaderModule';
+import Head from 'next/head';
 import {useRouter} from 'next/router';
+import {APP_NAME} from 'pages/_document';
 import {FC, ReactNode, useEffect} from 'react';
 
 interface Props {
@@ -28,7 +30,14 @@ const PageProvider: FC<Props> = ({children}) => {
     return <LoaderModule />;
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <Head>
+        <title>{APP_NAME}</title>
+      </Head>
+      {children}
+    </>
+  );
 };
 
 export default PageProvider;
