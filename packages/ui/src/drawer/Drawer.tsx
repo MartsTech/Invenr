@@ -32,11 +32,12 @@ export const Drawer: React.FC<DrawerProps> = ({
   open,
   handleDrawerClose,
   items,
+  ...props
 }) => {
   const theme = useTheme();
 
   return (
-    <StyledDrawer variant="permanent" open={open}>
+    <StyledDrawer variant="permanent" open={open} {...props}>
       <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === 'rtl' ? (

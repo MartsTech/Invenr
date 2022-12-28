@@ -26,7 +26,7 @@ export const AppBar: React.FC<AppBarProps> = ({
   return (
     <StyledAppBar position="fixed" open={open}>
       <Toolbar>
-        <IconButton
+        <StyledMenu
           color="inherit"
           aria-label="open drawer"
           onClick={handleDrawerOpen}
@@ -36,7 +36,7 @@ export const AppBar: React.FC<AppBarProps> = ({
             ...(open && {display: 'none'}),
           }}>
           <MenuIcon />
-        </IconButton>
+        </StyledMenu>
         <Typography variant="h6" noWrap component="div">
           {title}
         </Typography>
@@ -71,6 +71,12 @@ const StyledAppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
+}));
+
+const StyledMenu = styled(IconButton)(({theme}) => ({
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
 }));
 
 AppBar.displayName = 'AppBar';

@@ -6,8 +6,8 @@ import {useStoreSelector} from 'lib/store/store-hooks';
 import {useAuthSignOutMutation} from 'modules/auth/auth-api';
 import {authSessionSelector} from 'modules/auth/auth-state';
 import {useRouter} from 'next/router';
-import {useState} from 'react';
-import {AppBar, Drawer, DrawerHeader} from 'ui';
+import {useMemo, useState} from 'react';
+import {AppBar, BottomNavigation, Drawer, DrawerHeader} from 'ui';
 
 export interface AppLayoutProps {
   title: string;
@@ -31,6 +31,23 @@ export const AppLayout: React.FC<AppLayoutProps> = ({title, children}) => {
     setOpen(false);
   };
 
+  const navigationItems = useMemo(
+    () => [
+      {
+        label: 'Calendar',
+        icon: <CalendarIcon />,
+        onClick: () => router.push('/calendar'),
+      },
+    ],
+    [router],
+  );
+
+  const currentNavigationIndex = useMemo(() => {
+    return navigationItems.findIndex(
+      item => item.label.toLowerCase() === router.pathname.slice(1),
+    );
+  }, [navigationItems, router.pathname]);
+
   return (
     <StyledWrapper>
       <AppBar
@@ -51,20 +68,18 @@ export const AppLayout: React.FC<AppLayoutProps> = ({title, children}) => {
         open={open}
         handleDrawerOpen={handleDrawerOpen}
       />
-      <Drawer
+      <StyledDrawer
         open={open}
         handleDrawerClose={handleDrawerClose}
-        items={[
-          {
-            label: 'Calendar',
-            icon: <CalendarIcon />,
-            onClick: () => router.push('/calendar'),
-          },
-        ]}
+        items={navigationItems}
       />
       <StyledContainer component="main">
         <DrawerHeader />
         {children}
+        <StyledBottomNavigation
+          items={navigationItems}
+          currentIndex={currentNavigationIndex}
+        />
       </StyledContainer>
     </StyledWrapper>
   );
@@ -75,7 +90,23 @@ const StyledWrapper = styled(Box)({
   display: 'flex',
 });
 
-const StyledContainer = styled(Box)({
+const StyledDrawer = styled(Drawer)(({theme}) => ({
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+}));
+
+const StyledContainer = styled(Box)(({theme}) => ({
   padding: 3,
   height: 'calc(100% - 64px)',
-});
+
+  [theme.breakpoints.down('sm')]: {
+    height: 'calc(100% - 110px)',
+  },
+}));
+
+const StyledBottomNavigation = styled(BottomNavigation)(({theme}) => ({
+  [theme.breakpoints.up('sm')]: {
+    display: 'none',
+  },
+}));
