@@ -1,14 +1,27 @@
+import CalendarIcon from '@mui/icons-material/CalendarToday';
+import Logout from '@mui/icons-material/Logout';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import {useState} from 'react';
-import {AppBar, Drawer, DrawerHeader} from 'ui';
+import {styled} from '@mui/system';
+import {useStoreSelector} from 'lib/store/store-hooks';
+import {useAuthSignOutMutation} from 'modules/auth/auth-api';
+import {authSessionSelector} from 'modules/auth/auth-state';
+import {useRouter} from 'next/router';
+import {useMemo, useState} from 'react';
+import {AppBar, BottomNavigation, Drawer, DrawerHeader} from 'ui';
 
 export interface AppLayoutProps {
+  title: string;
   children: React.ReactNode;
 }
 
-export const AppLayout: React.FC<AppLayoutProps> = ({children}) => {
+export const AppLayout: React.FC<AppLayoutProps> = ({title, children}) => {
+  const session = useStoreSelector(authSessionSelector);
+
+  const [authSignOut] = useAuthSignOutMutation();
+
   const [open, setOpen] = useState(false);
+
+  const router = useRouter();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -18,15 +31,82 @@ export const AppLayout: React.FC<AppLayoutProps> = ({children}) => {
     setOpen(false);
   };
 
+  const navigationItems = useMemo(
+    () => [
+      {
+        label: 'Calendar',
+        icon: <CalendarIcon />,
+        onClick: () => router.push('/calendar'),
+      },
+    ],
+    [router],
+  );
+
+  const currentNavigationIndex = useMemo(() => {
+    return navigationItems.findIndex(
+      item => item.label.toLowerCase() === router.pathname.slice(1),
+    );
+  }, [navigationItems, router.pathname]);
+
   return (
-    <Box sx={{display: 'flex'}}>
-      <CssBaseline />
-      <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />
-      <Drawer open={open} handleDrawerClose={handleDrawerClose} />
-      <Box component="main" sx={{flexGrow: 1, p: 3}}>
+    <StyledWrapper>
+      <AppBar
+        avatar={{
+          src: session?.user?.image,
+          show: !!session,
+          dropdown: {
+            items: [
+              {
+                label: 'Logout',
+                icon: <Logout />,
+                onClick: () => authSignOut(),
+              },
+            ],
+          },
+        }}
+        title={title}
+        open={open}
+        handleDrawerOpen={handleDrawerOpen}
+      />
+      <StyledDrawer
+        open={open}
+        handleDrawerClose={handleDrawerClose}
+        items={navigationItems}
+      />
+      <StyledContainer component="main">
         <DrawerHeader />
         {children}
-      </Box>
-    </Box>
+        <StyledBottomNavigation
+          items={navigationItems}
+          currentIndex={currentNavigationIndex}
+        />
+      </StyledContainer>
+    </StyledWrapper>
   );
 };
+
+const StyledWrapper = styled(Box)({
+  height: '100vh',
+  display: 'flex',
+});
+
+const StyledDrawer = styled(Drawer)(({theme}) => ({
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
+}));
+
+const StyledContainer = styled(Box)(({theme}) => ({
+  padding: 3,
+  height: 'calc(100% - 64px)',
+
+  [theme.breakpoints.down('sm')]: {
+    height: 'calc(100% - 110px)',
+  },
+}));
+
+const StyledBottomNavigation = styled(BottomNavigation)(({theme}) => ({
+  [theme.breakpoints.up('sm')]: {
+    display: 'none',
+  },
+}));

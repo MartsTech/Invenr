@@ -1,6 +1,6 @@
 import {useStoreSelector} from 'lib/store/store-hooks';
 import {authSignedSelector} from 'modules/auth/auth-state';
-import {AppLayout} from 'modules/layout/AppLayout';
+import LoaderModule from 'modules/loader/LoaderModule';
 import {useRouter} from 'next/router';
 import {FC, ReactNode, useEffect} from 'react';
 
@@ -21,11 +21,14 @@ const PageProvider: FC<Props> = ({children}) => {
     }
   }, [signed, rounter]);
 
-  if (!signed && rounter.pathname !== '/login') {
-    return null;
+  if (
+    (!signed && rounter.pathname !== '/login') ||
+    (signed && rounter.pathname === '/login')
+  ) {
+    return <LoaderModule />;
   }
 
-  return <AppLayout>{children}</AppLayout>;
+  return <>{children}</>;
 };
 
 export default PageProvider;

@@ -4,21 +4,29 @@ import IconButton from '@mui/material/IconButton';
 import {styled} from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import {Avatar, AvatarProps} from '../avatar';
 import {drawerWidth} from '../drawer/drawer-utils';
 import {normalizeIcon} from '../icon/icon-utils';
 
 const MenuIcon = normalizeIcon(MuiMenu);
 
 export interface AppBarProps extends MuiAppBarProps {
+  title: string;
   open: boolean;
   handleDrawerOpen: () => void;
+  avatar?: AvatarProps;
 }
 
-export const AppBar: React.FC<AppBarProps> = ({open, handleDrawerOpen}) => {
+export const AppBar: React.FC<AppBarProps> = ({
+  avatar,
+  title,
+  open,
+  handleDrawerOpen,
+}) => {
   return (
     <StyledAppBar position="fixed" open={open}>
       <Toolbar>
-        <IconButton
+        <StyledMenu
           color="inherit"
           aria-label="open drawer"
           onClick={handleDrawerOpen}
@@ -28,10 +36,18 @@ export const AppBar: React.FC<AppBarProps> = ({open, handleDrawerOpen}) => {
             ...(open && {display: 'none'}),
           }}>
           <MenuIcon />
-        </IconButton>
+        </StyledMenu>
         <Typography variant="h6" noWrap component="div">
-          Invenr
+          {title}
         </Typography>
+        <Avatar
+          {...avatar}
+          sx={{
+            marginLeft: 'auto',
+            cursor: 'pointer',
+            ...avatar?.sx,
+          }}
+        />
       </Toolbar>
     </StyledAppBar>
   );
@@ -41,7 +57,7 @@ export default AppBar;
 
 const StyledAppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== 'open',
-})<Omit<AppBarProps, 'handleDrawerOpen'>>(({theme, open}) => ({
+})<{open: boolean}>(({theme, open}) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
@@ -55,6 +71,12 @@ const StyledAppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
+}));
+
+const StyledMenu = styled(IconButton)(({theme}) => ({
+  [theme.breakpoints.down('sm')]: {
+    display: 'none',
+  },
 }));
 
 AppBar.displayName = 'AppBar';
