@@ -87,6 +87,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({title, children}) => {
 
 const StyledWrapper = styled(Box)({
   height: '100vh',
+  width: '100vw',
   display: 'flex',
 });
 
@@ -99,6 +100,7 @@ const StyledDrawer = styled(Drawer)(({theme}) => ({
 const StyledContainer = styled(Box)(({theme}) => ({
   padding: 3,
   height: 'calc(100% - 64px)',
+  width: '100%',
 
   [theme.breakpoints.down('sm')]: {
     height: 'calc(100% - 110px)',
