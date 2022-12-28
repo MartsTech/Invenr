@@ -1,39 +1,17 @@
-import {useStoreSelector} from 'lib/store/store-hooks';
-import {authSignedSelector} from 'modules/auth/auth-state';
-import LoaderModule from 'modules/loader/LoaderModule';
 import Head from 'next/head';
-import {useRouter} from 'next/router';
 import {APP_NAME} from 'pages/_document';
-import {FC, ReactNode, useEffect} from 'react';
+import type {FC, ReactNode} from 'react';
 
 interface Props {
+  title: string;
   children: ReactNode;
 }
 
-const PageProvider: FC<Props> = ({children}) => {
-  const signed = useStoreSelector(authSignedSelector);
-
-  const rounter = useRouter();
-
-  useEffect(() => {
-    if (!signed && rounter.pathname !== '/login') {
-      rounter.push('/login');
-    } else if (signed && rounter.pathname === '/login') {
-      rounter.push('/');
-    }
-  }, [signed, rounter]);
-
-  if (
-    (!signed && rounter.pathname !== '/login') ||
-    (signed && rounter.pathname === '/login')
-  ) {
-    return <LoaderModule />;
-  }
-
+const PageProvider: FC<Props> = ({title, children}) => {
   return (
     <>
       <Head>
-        <title>{APP_NAME}</title>
+        <title>{`${APP_NAME} | ${title}`}</title>
       </Head>
       {children}
     </>

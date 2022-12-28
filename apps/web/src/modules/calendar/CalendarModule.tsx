@@ -1,10 +1,9 @@
-import Box from '@mui/material/Box';
 import {styled} from '@mui/material/styles';
 import {useStoreSelector} from 'lib/store/store-hooks';
 import {calendarListSelector} from 'modules/calendarList/calendarList-state';
 import {eventListSelector} from 'modules/event/event-state';
 import {FC, useMemo} from 'react';
-import {Calendar, CalendarAppointment, CalendarResource} from 'ui';
+import {Box, Calendar, CalendarAppointment, CalendarResource} from 'ui';
 
 const CalendarModule: FC = () => {
   const calendarList = useStoreSelector(calendarListSelector);
@@ -56,12 +55,6 @@ const CalendarModule: FC = () => {
 };
 
 export default CalendarModule;
-
-const StyledList = styled(Box)(({theme}) => ({
-  [theme.breakpoints.down('sm')]: {
-    display: 'none',
-  },
-}));
 
 const StyledContainer = styled(Box)({
   display: 'flex',
