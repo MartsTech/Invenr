@@ -1,5 +1,6 @@
 import MuiMenu from '@mui/icons-material/Menu';
 import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import {styled} from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import {Avatar, AvatarProps} from '../avatar';
 import {drawerWidth} from '../drawer/drawer-utils';
 import {normalizeIcon} from '../icon/icon-utils';
+import {ThemeMode} from '../theme/ThemeMode';
 
 const MenuIcon = normalizeIcon(MuiMenu);
 
@@ -40,14 +42,16 @@ export const AppBar: React.FC<AppBarProps> = ({
         <Typography variant="h6" noWrap component="div">
           {title}
         </Typography>
-        <Avatar
-          {...avatar}
-          sx={{
-            marginLeft: 'auto',
-            cursor: 'pointer',
-            ...avatar?.sx,
-          }}
-        />
+        <StyledIcons>
+          <Avatar
+            {...avatar}
+            sx={{
+              cursor: 'pointer',
+              ...avatar?.sx,
+            }}
+          />
+          <ThemeMode />
+        </StyledIcons>
       </Toolbar>
     </StyledAppBar>
   );
@@ -78,5 +82,11 @@ const StyledMenu = styled(IconButton)(({theme}) => ({
     display: 'none',
   },
 }));
+
+const StyledIcons = styled(Box)({
+  display: 'flex',
+  gap: 4,
+  marginLeft: 'auto',
+});
 
 AppBar.displayName = 'AppBar';
