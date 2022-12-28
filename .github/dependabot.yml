@@ -4,3 +4,15 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
+  - package-ecosystem: 'yarn'
+    directory: '/apps/web'
+    schedule:
+      interval: 'weekly'
+  - package-ecosystem: 'yarn'
+    directory: '/packages/database'
+    schedule:
+      interval: 'weekly'
+  - package-ecosystem: 'yarn'
+    directory: '/packages/ui'
+    schedule:
+      interval: 'weekly'
