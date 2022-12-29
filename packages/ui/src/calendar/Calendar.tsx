@@ -7,6 +7,7 @@ import {
   AllDayPanel,
   Appointments,
   AppointmentTooltip,
+  CurrentTimeIndicator,
   DayView,
   Resources,
   Scheduler,
@@ -14,6 +15,7 @@ import {
 import Paper from '@mui/material/Paper';
 import {styled} from '@mui/system';
 import type {FC} from 'react';
+import {CalendarTimeIndicator} from './CalendarTimeIndicator';
 
 export interface CalendarAppointment extends AppointmentModel {}
 
@@ -39,6 +41,7 @@ export const Calendar: FC<CalendarProps> = ({
         <AppointmentTooltip />
         <AllDayPanel />
         <Resources data={resources} />
+        <CurrentTimeIndicator indicatorComponent={CalendarTimeIndicator} />
       </Scheduler>
     </StyledPaper>
   );
