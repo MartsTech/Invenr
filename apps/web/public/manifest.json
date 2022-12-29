@@ -1,10 +1,10 @@
 {
-  "name": "invenr",
-  "short_name": "invenr",
+  "name": "Invenr",
+  "short_name": "Invenr",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#FFFFFF",
-  "background_color": "#FFFFFF",
+  "theme_color": "#00000",
+  "background_color": "#000000",
   "start_url": "/",
   "icons": [
     {

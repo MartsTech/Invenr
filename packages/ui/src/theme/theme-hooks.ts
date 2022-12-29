@@ -25,14 +25,11 @@ export const useBroadcastChannel = <T>(
     };
   }, [name, handler]);
 
-  const postMessage = React.useCallback(
-    (message: T) => {
-      if (channel.current !== null) {
-        channel.current.postMessage(message);
-      }
-    },
-    [channel.current],
-  );
+  const postMessage = React.useCallback((message: T) => {
+    if (channel.current !== null) {
+      channel.current.postMessage(message);
+    }
+  }, []);
 
   return {
     postMessage,
