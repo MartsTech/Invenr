@@ -1,5 +1,4 @@
 import NextDocument, {Head, Html, Main, NextScript} from 'next/document';
-import {createElement} from 'react';
 
 export const APP_NAME = 'Invenr';
 export const APP_DESCRIPTION =
@@ -28,24 +27,6 @@ class Document extends NextDocument {
           />
           <link rel="manifest" href="/manifest.json" />
           <link rel="shortcut icon" href="/favicon.ico" />
-          {createElement(
-            'script',
-            {},
-            `
-            const usesDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches || false;
-            const manifest = document.getElementById('manifest');
-            
-            function switchIcon(usesDarkMode) {
-              if (usesDarkMode) { 
-                manifest.href='%PUBLIC_URL%/manifest-dark.json' 
-              } else {
-                manifest.href='%PUBLIC_URL%/manifest.json' 
-              }
-            }
-              
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener( "change", (e) => switchIcon(e.matches));
-            switchIcon(usesDarkMode);`,
-          )}
         </Head>
         <body>
           <Main />
