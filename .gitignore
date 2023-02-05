@@ -37,3 +37,6 @@ dist
 # pwa
 **/public/workbox-*.js
 **/public/sw.js
+
+# vercel
+.vercel

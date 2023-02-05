@@ -1,15 +1,23 @@
 import {styled} from '@mui/material/styles';
 import {calendarListStateSelector} from 'features/calendarList/calendarList-state';
 import {eventsListStateSelector} from 'features/events/events-state';
-import {useStoreSelector} from 'lib/store/store-hooks';
+import {useStoreDispatch, useStoreSelector} from 'lib/store/store-hooks';
 import {FC, useMemo} from 'react';
 import {Box, Calendar, CalendarAppointment, CalendarResource} from 'ui';
+import {
+  calendarCurrentDateChanged,
+  calendarCurrentDateSelector,
+  calendarCurrentViewChanged,
+  calendarCurrentViewSelector,
+} from './calendar-state';
 
 const CalendarModule: FC = () => {
   const calendarListState = useStoreSelector(calendarListStateSelector);
   const eventsState = useStoreSelector(eventsListStateSelector);
+  const currentDate = useStoreSelector(calendarCurrentDateSelector);
+  const currentView = useStoreSelector(calendarCurrentViewSelector);
 
-  const currentDate: string = useMemo(() => new Date().toISOString(), []);
+  const dispatch = useStoreDispatch();
 
   const appointments: CalendarAppointment[] = useMemo(
     () =>
@@ -47,6 +55,13 @@ const CalendarModule: FC = () => {
     <StyledContainer>
       <Calendar
         currentDate={currentDate}
+        onCurrentDateChange={date =>
+          dispatch(calendarCurrentDateChanged(date.toISOString()))
+        }
+        currentViewName={currentView}
+        onCurrentViewNameChange={view =>
+          dispatch(calendarCurrentViewChanged(view))
+        }
         appointments={appointments}
         resources={resources}
       />

@@ -38,7 +38,7 @@ const Provider: FC<Props> = ({children}) => {
     } else if (status === 'unauthenticated' && sessionState.isSuccess) {
       dispatch(authSessionStateUpdated(reqStateDefault()));
     }
-  }, [status, data, sessionState, dispatch]);
+  }, [status, data, dispatch]);
 
   return <>{children}</>;
 };
