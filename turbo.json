@@ -26,7 +26,8 @@
       "dependsOn": ["^build"]
     },
     "dev": {
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "db:migrate:deploy": {
       "outputs": []

@@ -1,6 +1,7 @@
 import {combineReducers, configureStore, Middleware} from '@reduxjs/toolkit';
 import {setupListeners} from '@reduxjs/toolkit/dist/query';
 import {authPersistedReducer} from 'features/auth/auth-state';
+import {calendarPersistedReducer} from 'features/calendar/calendar-state';
 import {calendarListPersistedReducer} from 'features/calendarList/calendarList-state';
 import {eventsMiddleware} from 'features/events/events-middleware';
 import {eventsPersistedReducer} from 'features/events/events-state';
@@ -30,6 +31,7 @@ if (process.env.NODE_ENV === `development`) {
 export const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
   auth: authPersistedReducer,
+  calendar: calendarPersistedReducer,
   calendarList: calendarListPersistedReducer,
   events: eventsPersistedReducer,
 });
