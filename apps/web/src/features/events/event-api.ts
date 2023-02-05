@@ -6,15 +6,21 @@ import type {CalendarEvent} from './events-types';
 const eventsApi = api.injectEndpoints({
   endpoints: builder => ({
     // ================= List =====================
-    events: builder.query<CalendarEvent[], {calendarIds?: string[]}>({
-      query: ({calendarIds}) => ({
+    events: builder.query<
+      CalendarEvent[],
+      {calendarIds?: string[]; currentDate?: string; view?: string}
+    >({
+      query: ({calendarIds, currentDate, view}) => ({
         url: '/events',
         method: 'GET',
         params: {
           calendarIds: calendarIds?.join(','),
+          currentDate: currentDate || new Date().toISOString(),
+          view: view || 'Day',
         },
       }),
       async onQueryStarted(_arg, {queryFulfilled, dispatch}) {
+        console.log('onQueryStarted');
         const result = await queryFulfilled;
 
         if (result.meta?.response?.status === 200) {

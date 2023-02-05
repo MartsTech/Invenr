@@ -1,5 +1,6 @@
 import {calendar} from '@googleapis/calendar';
 import {auth} from '@googleapis/oauth2';
+import {getWeekDates} from 'common/week/getWeekDays';
 import type {CalendarEvent} from 'features/events/events-types';
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {getSession} from 'next-auth/react';
@@ -7,6 +8,8 @@ import {getSession} from 'next-auth/react';
 interface ExtendedNextApiRequest extends NextApiRequest {
   query: {
     calendarIds?: string;
+    currentDate?: string;
+    view?: string;
   };
 }
 
@@ -39,9 +42,9 @@ const handler = async (
     refresh_token: session.refreshToken,
   });
 
-  const now = new Date();
+  const now = new Date(req.query.currentDate || Date.now());
 
-  const timeMin = new Date(
+  let timeMin = new Date(
     now.getFullYear(),
     now.getMonth(),
     now.getDate(),
@@ -50,7 +53,7 @@ const handler = async (
     0,
   ).toISOString();
 
-  const timeMax = new Date(
+  let timeMax = new Date(
     now.getFullYear(),
     now.getMonth(),
     now.getDate() + 1,
@@ -58,6 +61,12 @@ const handler = async (
     0,
     0,
   ).toISOString();
+
+  if (req.query.view === 'Week') {
+    const weekDays = getWeekDates(timeMin);
+    timeMin = weekDays.first;
+    timeMax = weekDays.last;
+  }
 
   const calendarIds = req.query?.calendarIds?.split(',') || ['primary'];
 

@@ -23,7 +23,15 @@ export const eventsListStateUpdated = createAction<EventsState['listState']>(
 // ================= Reducers =====================
 export const eventsReducer = createReducer(initialState, builder => {
   builder.addCase(eventsListStateUpdated, (state, action) => {
-    state.listState = action.payload;
+    state.listState = {
+      ...state.listState,
+      body: [
+        ...(state.listState.body || []),
+        ...(action.payload.body || []).filter(
+          e => !state.listState.body?.find(e2 => e2.id === e.id),
+        ),
+      ],
+    };
   });
 });
 
