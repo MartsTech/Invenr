@@ -1,5 +1,5 @@
 import styled from '@mui/system/styled';
-import {useAuthSignInMutation} from 'modules/auth/auth-api';
+import {useAuthSignInMutation} from 'features/auth/auth-api';
 import type {FC} from 'react';
 import {Box, Button} from 'ui';
 import type {LoginProviders} from './login-types';

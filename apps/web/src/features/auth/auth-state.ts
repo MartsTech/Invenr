@@ -1,31 +1,29 @@
 import {createAction, createReducer} from '@reduxjs/toolkit';
-import type {RootState} from 'lib/store/store-types';
+import type {RequestState, RootState} from 'lib/store/store-types';
+import {reqStateDefault} from 'lib/store/store-utils';
 import {persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import type {AuthSession} from './auth-types';
 
 // =================== Types ======================
 export interface AuthState {
-  session: AuthSession | null;
+  sessionState: RequestState<AuthSession>;
 }
 
 // ============== Initial state ===================
 const initialState: AuthState = {
-  session: null,
+  sessionState: reqStateDefault(),
 };
 
 // ================== Actions =====================
-export const authLogin = createAction<{session: AuthSession}>('auth/login');
-
-export const authLogout = createAction('auth/logout');
+export const authSessionStateUpdated = createAction<AuthState['sessionState']>(
+  'auth/sessionStateUpdated',
+);
 
 // ================= Reducers =====================
 export const authReducer = createReducer(initialState, builder => {
-  builder.addCase(authLogin, (state, action) => {
-    state.session = action.payload.session;
-  });
-  builder.addCase(authLogout, state => {
-    state.session = null;
+  builder.addCase(authSessionStateUpdated, (state, action) => {
+    state.sessionState = action.payload;
   });
 });
 
@@ -34,14 +32,12 @@ export const authPersistedReducer = persistReducer(
   {
     key: 'auth',
     storage: storage,
-    whitelist: ['session'],
+    whitelist: ['sessionState'],
   },
   authReducer,
 );
 
 // ================= Selectors =====================
-export const authSignedSelector = (state: RootState): boolean =>
-  state.auth.session !== null;
-
-export const authSessionSelector = (state: RootState): AuthSession | null =>
-  state.auth.session;
+export const authSessionStateSelector = (
+  state: RootState,
+): AuthState['sessionState'] => state.auth.sessionState;
