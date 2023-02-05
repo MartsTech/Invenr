@@ -1,7 +1,7 @@
 import MuiChevronLeft from '@mui/icons-material/ChevronLeft';
 import MuiChevronRight from '@mui/icons-material/ChevronRight';
 import Divider from '@mui/material/Divider';
-import MuiDrawer from '@mui/material/Drawer';
+import MuiDrawer, {DrawerProps as MuiDrawerProps} from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -22,7 +22,7 @@ export interface DrawerItem {
   onClick: () => void;
 }
 
-export interface DrawerProps {
+export interface DrawerProps extends MuiDrawerProps {
   open: boolean;
   handleDrawerClose: () => void;
   items: DrawerItem[];

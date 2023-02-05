@@ -2,9 +2,9 @@ import CalendarIcon from '@mui/icons-material/CalendarToday';
 import Logout from '@mui/icons-material/Logout';
 import Box from '@mui/material/Box';
 import {styled} from '@mui/system';
+import {useAuthSignOutMutation} from 'features/auth/auth-api';
+import {authSessionStateSelector} from 'features/auth/auth-state';
 import {useStoreSelector} from 'lib/store/store-hooks';
-import {useAuthSignOutMutation} from 'modules/auth/auth-api';
-import {authSessionSelector} from 'modules/auth/auth-state';
 import {useRouter} from 'next/router';
 import {useMemo, useState} from 'react';
 import {AppBar, BottomNavigation, Drawer, DrawerHeader} from 'ui';
@@ -15,7 +15,7 @@ export interface AppLayoutProps {
 }
 
 export const AppLayout: React.FC<AppLayoutProps> = ({title, children}) => {
-  const session = useStoreSelector(authSessionSelector);
+  const sessionState = useStoreSelector(authSessionStateSelector);
 
   const [authSignOut] = useAuthSignOutMutation();
 
@@ -52,8 +52,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({title, children}) => {
     <StyledWrapper>
       <AppBar
         avatar={{
-          src: session?.user?.image,
-          show: !!session,
+          src: sessionState.body?.user?.image,
+          show: sessionState.isSuccess,
           dropdown: {
             items: [
               {

@@ -1,19 +1,19 @@
 import {styled} from '@mui/material/styles';
+import {calendarListStateSelector} from 'features/calendarList/calendarList-state';
+import {eventsListStateSelector} from 'features/events/events-state';
 import {useStoreSelector} from 'lib/store/store-hooks';
-import {calendarListSelector} from 'modules/calendarList/calendarList-state';
-import {eventListSelector} from 'modules/event/event-state';
 import {FC, useMemo} from 'react';
 import {Box, Calendar, CalendarAppointment, CalendarResource} from 'ui';
 
 const CalendarModule: FC = () => {
-  const calendarList = useStoreSelector(calendarListSelector);
-  const events = useStoreSelector(eventListSelector);
+  const calendarListState = useStoreSelector(calendarListStateSelector);
+  const eventsState = useStoreSelector(eventsListStateSelector);
 
   const currentDate: string = useMemo(() => new Date().toISOString(), []);
 
   const appointments: CalendarAppointment[] = useMemo(
     () =>
-      events?.map(
+      eventsState.body?.map(
         item =>
           ({
             id: item.id,
@@ -24,7 +24,7 @@ const CalendarModule: FC = () => {
             calendarId: item.calendarId,
           } as CalendarAppointment),
       ) || [],
-    [events],
+    [eventsState.body],
   );
 
   const resources: CalendarResource[] = useMemo(
@@ -33,14 +33,14 @@ const CalendarModule: FC = () => {
         fieldName: 'calendarId',
         title: 'Calendar Id',
         instances:
-          calendarList?.map(item => ({
+          calendarListState.body?.map(item => ({
             id: item.id,
             text: item.summary,
             color: item.backgroundColor,
           })) || [],
       } as CalendarResource,
     ],
-    [calendarList],
+    [calendarListState.body],
   );
 
   return (

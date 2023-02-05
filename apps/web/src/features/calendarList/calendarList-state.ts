@@ -1,28 +1,29 @@
 import {createAction, createReducer} from '@reduxjs/toolkit';
-import type {RootState} from 'lib/store/store-types';
+import type {RequestState, RootState} from 'lib/store/store-types';
+import {reqStateDefault} from 'lib/store/store-utils';
 import {persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import type {CalendarListEntry} from './calendarList-types';
 
 // =================== Types ======================
 export interface CalendarListState {
-  list: CalendarListEntry[];
+  listState: RequestState<CalendarListEntry[]>;
 }
 
 // ============== Initial state ===================
 const initialState: CalendarListState = {
-  list: [],
+  listState: reqStateDefault(),
 };
 
 // =================== Actions ====================
-export const calendarListLoaded = createAction<CalendarListState['list']>(
-  'calendarList/loaded',
-);
+export const calendarListStateUpdated = createAction<
+  CalendarListState['listState']
+>('calendarList/listStateUpdated');
 
 // ================= Reducers =====================
 export const calendarListReducer = createReducer(initialState, builder => {
-  builder.addCase(calendarListLoaded, (state, action) => {
-    state.list = action.payload;
+  builder.addCase(calendarListStateUpdated, (state, action) => {
+    state.listState = action.payload;
   });
 });
 
@@ -31,11 +32,12 @@ export const calendarListPersistedReducer = persistReducer(
   {
     key: 'calendarList',
     storage: storage,
-    whitelist: ['list'],
+    whitelist: ['listState'],
   },
   calendarListReducer,
 );
 
 // ================= Selectors ====================
-export const calendarListSelector = (state: RootState) =>
-  state.calendarList.list;
+export const calendarListStateSelector = (
+  state: RootState,
+): CalendarListState['listState'] => state.calendarList.listState;

@@ -1,4 +1,6 @@
-import MuiBottomNavigation from '@mui/material/BottomNavigation';
+import MuiBottomNavigation, {
+  BottomNavigationProps as MuiButtomNavigationProps,
+} from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import React from 'react';
 
@@ -8,7 +10,7 @@ export interface BottomNavigationItem {
   onClick: () => void;
 }
 
-export interface BottomNavigationProps {
+export interface BottomNavigationProps extends MuiButtomNavigationProps {
   currentIndex: number;
   items: BottomNavigationItem[];
 }

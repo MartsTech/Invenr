@@ -1,6 +1,6 @@
-import MuiButton from '@mui/material/Button';
+import MuiButton, {ButtonProps as MuiButtonProps} from '@mui/material/Button';
 
-export interface ButtonProps {
+export interface ButtonProps extends MuiButtonProps {
   title: string;
   onClick?: () => void;
 }

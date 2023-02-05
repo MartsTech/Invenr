@@ -1,6 +1,6 @@
 import {api} from 'lib/api';
-import {apiMethods, apiStatuses} from 'lib/api/api-constants';
-import {calendarListLoaded} from './calendarList-state';
+import {reqStateFailure, reqStateSuccess} from 'lib/store/store-utils';
+import {calendarListStateUpdated} from './calendarList-state';
 import type {CalendarListEntry} from './calendarList-types';
 
 const calendarListApi = api.injectEndpoints({
@@ -9,17 +9,24 @@ const calendarListApi = api.injectEndpoints({
     calendarList: builder.query<CalendarListEntry[], void>({
       query: () => ({
         url: '/calendarList',
-        method: apiMethods.GET,
+        method: 'GET',
       }),
       async onQueryStarted(_arg, {queryFulfilled, dispatch}) {
         const result = await queryFulfilled;
-        if (result.meta?.response?.status === apiStatuses.STATUS_200) {
-          dispatch(calendarListLoaded(result.data));
+
+        if (result.meta?.response?.status === 200) {
+          dispatch(calendarListStateUpdated(reqStateSuccess(result.data)));
+        } else {
+          dispatch(
+            calendarListStateUpdated(
+              reqStateFailure(new Error('Error loading calendar list')),
+            ),
+          );
         }
       },
       transformResponse: (response: {data: CalendarListEntry[]}) =>
         response.data,
-      providesTags: ['CalendarListEntry'],
+      providesTags: ['CalendarList'],
     }),
   }),
 });

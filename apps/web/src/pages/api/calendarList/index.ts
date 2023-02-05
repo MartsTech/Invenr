@@ -1,6 +1,6 @@
 import {calendar} from '@googleapis/calendar';
 import {auth} from '@googleapis/oauth2';
-import type {CalendarListEntry} from 'modules/calendarList/calendarList-types';
+import type {CalendarListEntry} from 'features/calendarList/calendarList-types';
 import type {NextApiRequest, NextApiResponse} from 'next';
 import {getSession} from 'next-auth/react';
 
@@ -50,7 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   res.setHeader(
     'Cache-Control',
-    'public, s-maxage=600, stale-while-revalidate=1000',
+    'public, s-maxage=10, stale-while-revalidate=59',
   );
 
   res.status(200).json({data});
