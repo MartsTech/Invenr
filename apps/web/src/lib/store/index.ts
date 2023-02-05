@@ -1,10 +1,10 @@
 import {combineReducers, configureStore, Middleware} from '@reduxjs/toolkit';
 import {setupListeners} from '@reduxjs/toolkit/dist/query';
+import {authPersistedReducer} from 'features/auth/auth-state';
+import {calendarListPersistedReducer} from 'features/calendarList/calendarList-state';
+import {eventsMiddleware} from 'features/events/events-middleware';
+import {eventsPersistedReducer} from 'features/events/events-state';
 import {api} from 'lib/api';
-import {authPersistedReducer} from 'modules/auth/auth-state';
-import {calendarListPersistedReducer} from 'modules/calendarList/calendarList-state';
-import {eventMiddleware} from 'modules/event/event-middleware';
-import {eventPersistedReducer} from 'modules/event/event-state';
 import {createLogger} from 'redux-logger';
 import {
   FLUSH,
@@ -31,7 +31,7 @@ export const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
   auth: authPersistedReducer,
   calendarList: calendarListPersistedReducer,
-  event: eventPersistedReducer,
+  events: eventsPersistedReducer,
 });
 
 export const store = configureStore({
@@ -41,7 +41,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(api.middleware, eventMiddleware, ...middlewares),
+    }).concat(api.middleware, eventsMiddleware, ...middlewares),
 });
 
 setupListeners(store.dispatch);

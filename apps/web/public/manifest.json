@@ -3,7 +3,7 @@
   "short_name": "Invenr",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#00000",
+  "theme_color": "#000000",
   "background_color": "#000000",
   "start_url": "/",
   "icons": [

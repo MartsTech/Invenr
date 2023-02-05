@@ -1,5 +1,5 @@
-import type {LoginProviders} from 'modules/login/login-types';
-import LoginModule from 'modules/login/LoginModule';
+import type {LoginProviders} from 'features/login/login-types';
+import LoginModule from 'features/login/LoginModule';
 import type {GetServerSideProps, NextPage} from 'next';
 import {getProviders, getSession} from 'next-auth/react';
 

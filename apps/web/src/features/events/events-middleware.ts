@@ -1,9 +1,9 @@
 import type {AnyAction} from '@reduxjs/toolkit';
+import {calendarListStateUpdated} from 'features/calendarList/calendarList-state';
 import type {StoreMiddleware} from 'lib/store/store-types';
-import {calendarListLoaded} from 'modules/calendarList/calendarList-state';
 import eventApi from './event-api';
 
-export const eventMiddleware: StoreMiddleware = store => {
+export const eventsMiddleware: StoreMiddleware = store => {
   return next => {
     return (action: AnyAction) => {
       // ...Code before reducers and other middleware
@@ -12,10 +12,10 @@ export const eventMiddleware: StoreMiddleware = store => {
 
       // ...Code after reducers and other middleware
 
-      if (action.type === calendarListLoaded.type) {
+      if (calendarListStateUpdated.match(action) && action.payload.isSuccess) {
         store.dispatch(
           eventApi.endpoints.events.initiate({
-            calendarIds: action.payload.map(
+            calendarIds: action.payload.body?.map(
               (calendar: {id: string}) => calendar.id,
             ),
           }),

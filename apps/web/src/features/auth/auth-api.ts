@@ -1,5 +1,5 @@
+import type {LoginProviders} from 'features/login/login-types';
 import {api} from 'lib/api';
-import type {LoginProviders} from 'modules/login/login-types';
 import {signIn, signOut} from 'next-auth/react';
 
 const authApi = api.injectEndpoints({

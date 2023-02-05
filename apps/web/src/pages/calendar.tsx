@@ -1,5 +1,5 @@
-import CalendarModule from 'modules/calendar/CalendarModule';
-import {useCalendarListQuery} from 'modules/calendarList/calendarList-api';
+import CalendarModule from 'features/calendar/CalendarModule';
+import {useCalendarListQuery} from 'features/calendarList/calendarList-api';
 import type {GetStaticProps, NextPage} from 'next';
 
 const CalendarPage: NextPage = () => {
