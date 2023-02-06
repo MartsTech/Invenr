@@ -5,8 +5,8 @@ const TermsOfUse: NextPage = () => {
     <div>
       <h1>Terms of Use</h1>
       <p>
-        These terms of use (“Terms”) govern your use of the Invenr web
-        application (the “Service”). By accessing or using the Service, you
+        These terms of use ("Terms") govern your use of the Invenr web
+        application (the "Service"). By accessing or using the Service, you
         agree to be bound by these Terms and our Privacy Policy. If you do not
         agree to these Terms, you may not use the Service.
       </p>
@@ -57,7 +57,7 @@ const TermsOfUse: NextPage = () => {
 
       <h2>Disclaimer of Warranties</h2>
       <p>
-        The Service is provided on an “as is” and “as available” basis. We make
+        The Service is provided on an "as is" and "as available" basis. We make
         no representations or warranties of any kind, express or implied, as to
         the operation of the Service or the information, content, materials, or
         products included on the Service. You agree that your use of the Service
@@ -75,7 +75,7 @@ const TermsOfUse: NextPage = () => {
       <p>
         You agree to indemnify, defend, and hold harmless Invenr, its officers,
         directors, employees, agents, licensors, and suppliers (collectively the
-        “Service Providers”) from and against all losses, expenses, damages, and
+        "Service Providers") from and against all losses, expenses, damages, and
         costs, including reasonable attorneys' fees, resulting from any
         violation of these Terms or any activity related to your account
         (including negligent or wrongful conduct) by you or any other person
