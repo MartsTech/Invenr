@@ -32,7 +32,7 @@ const CalendarModule: FC = () => {
             calendarId: item.calendarId,
           } as CalendarAppointment),
       ) || [],
-    [eventsState.body],
+    [eventsState],
   );
 
   const resources: CalendarResource[] = useMemo(
@@ -48,7 +48,7 @@ const CalendarModule: FC = () => {
           })) || [],
       } as CalendarResource,
     ],
-    [calendarListState.body],
+    [calendarListState],
   );
 
   return (

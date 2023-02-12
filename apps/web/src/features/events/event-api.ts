@@ -20,7 +20,6 @@ const eventsApi = api.injectEndpoints({
         },
       }),
       async onQueryStarted(_arg, {queryFulfilled, dispatch}) {
-        console.log('onQueryStarted');
         const result = await queryFulfilled;
 
         if (result.meta?.response?.status === 200) {

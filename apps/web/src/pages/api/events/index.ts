@@ -111,11 +111,6 @@ const handler = async (
       calendarId: item?.calendarId || '',
     })) || [];
 
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=59',
-  );
-
   res.status(200).json({data});
 };
 

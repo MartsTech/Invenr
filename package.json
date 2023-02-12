@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
+    "dev": "turbo run dev --force",
     "db:migrate:deploy": "turbo run db:migrate:deploy",
     "db:push": "turbo run db:push",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
