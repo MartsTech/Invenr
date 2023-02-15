@@ -3,7 +3,13 @@ import {calendarListStateSelector} from 'features/calendarList/calendarList-stat
 import {eventsListStateSelector} from 'features/events/events-state';
 import {useStoreDispatch, useStoreSelector} from 'lib/store/store-hooks';
 import {FC, useMemo} from 'react';
-import {Box, Calendar, CalendarAppointment, CalendarResource} from 'ui';
+import {
+  Box,
+  Calendar,
+  CalendarAppointment,
+  CalendarResource,
+  FloatButton,
+} from 'ui';
 import {
   calendarCurrentDateChanged,
   calendarCurrentDateSelector,
@@ -65,6 +71,7 @@ const CalendarModule: FC = () => {
         appointments={appointments}
         resources={resources}
       />
+      <FloatButton />
     </StyledContainer>
   );
 };

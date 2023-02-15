@@ -14,9 +14,7 @@ interface ExtendedNextApiRequest extends NextApiRequest {
 }
 
 type Data =
-  | {
-      data: CalendarEvent[];
-    }
+  | CalendarEvent[]
   | {
       error: string;
     };
@@ -109,9 +107,10 @@ const handler = async (
         typeof item?.start?.dateTime !== 'string' &&
         typeof item?.end?.dateTime !== 'string',
       calendarId: item?.calendarId || '',
+      available: item?.transparency === 'transparent' ? 'free' : 'busy',
     })) || [];
 
-  res.status(200).json({data});
+  res.status(200).json(data);
 };
 
 export default handler;

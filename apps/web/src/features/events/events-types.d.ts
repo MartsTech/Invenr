@@ -10,4 +10,5 @@ export interface CalendarEvent {
   };
   allDay: boolean;
   calendarId: string;
+  available: 'busy' | 'free';
 }
