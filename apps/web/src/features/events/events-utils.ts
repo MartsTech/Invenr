@@ -126,6 +126,7 @@ export const eventsTakeTimeSlot = (
 
     const splitEvent: CalendarEvent = {
       ...event,
+      id: `${event.id}-split`,
       start: {
         dateTime: moment(timeSlot.end).format(),
       },

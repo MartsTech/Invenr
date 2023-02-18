@@ -5,7 +5,16 @@ import {normalizeIcon} from '../icon/icon-utils';
 
 const MoreVertIcon = normalizeIcon(MoreVert);
 
-export const FloatButton: React.FC = () => {
+export interface FloatButtonProps {
+  items: FloatButtonItem[];
+}
+
+export interface FloatButtonItem {
+  label: string;
+  onClick: () => void;
+}
+
+export const FloatButton: React.FC<FloatButtonProps> = ({items}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event: any) => {
@@ -27,9 +36,16 @@ export const FloatButton: React.FC = () => {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}>
-        <StyledMenuItem onClick={handleClose}>Create</StyledMenuItem>
-        <StyledMenuItem onClick={handleClose}>Reset</StyledMenuItem>
-        <StyledMenuItem onClick={handleClose}>Edit</StyledMenuItem>
+        {items.map(item => (
+          <StyledMenuItem
+            key={item.label}
+            onClick={() => {
+              handleClose();
+              item.onClick();
+            }}>
+            {item.label}
+          </StyledMenuItem>
+        ))}
       </StyledMenu>
     </div>
   );

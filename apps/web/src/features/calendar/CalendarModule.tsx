@@ -1,9 +1,14 @@
 import {styled} from '@mui/material/styles';
 import {getWeekDates} from 'common/week/getWeekDays';
 import {calendarListStateSelector} from 'features/calendarList/calendarList-state';
-import {eventsListStateSelector} from 'features/events/events-state';
+import {
+  eventsHasBackupSelector,
+  eventsListStateSelector,
+  eventsRescheduled,
+  eventsRestoreBackup,
+} from 'features/events/events-state';
 import {useStoreDispatch, useStoreSelector} from 'lib/store/store-hooks';
-import {FC, useMemo} from 'react';
+import {FC, useEffect, useMemo, useState} from 'react';
 import {
   Box,
   Calendar,
@@ -23,24 +28,11 @@ const CalendarModule: FC = () => {
   const eventsState = useStoreSelector(eventsListStateSelector);
   const currentDate = useStoreSelector(calendarCurrentDateSelector);
   const currentView = useStoreSelector(calendarCurrentViewSelector);
+  const hasBackup = useStoreSelector(eventsHasBackupSelector);
 
   const dispatch = useStoreDispatch();
 
-  const appointments: CalendarAppointment[] = useMemo(
-    () =>
-      eventsState.body?.map(
-        item =>
-          ({
-            id: item.id,
-            startDate: item.start.dateTime,
-            endDate: item.end.dateTime,
-            title: item.summary,
-            allDay: item.allDay,
-            calendarId: item.calendarId,
-          } as CalendarAppointment),
-      ) || [],
-    [eventsState.body],
-  );
+  const [appointments, setAppointments] = useState<CalendarAppointment[]>([]);
 
   const resources: CalendarResource[] = useMemo(
     () => [
@@ -57,6 +49,22 @@ const CalendarModule: FC = () => {
     ],
     [calendarListState.body],
   );
+
+  useEffect(() => {
+    setAppointments(
+      eventsState.body?.map(
+        item =>
+          ({
+            id: item.id,
+            startDate: item.start.dateTime,
+            endDate: item.end.dateTime,
+            title: item.summary,
+            allDay: item.allDay,
+            calendarId: item.calendarId,
+          } as CalendarAppointment),
+      ) || [],
+    );
+  }, [eventsState.body]);
 
   return (
     <StyledContainer>
@@ -75,7 +83,24 @@ const CalendarModule: FC = () => {
         appointments={appointments}
         resources={resources}
       />
-      <FloatButton />
+      <FloatButton
+        items={
+          hasBackup
+            ? [
+                {
+                  label: 'Restore',
+                  onClick: () => dispatch(eventsRestoreBackup()),
+                },
+              ]
+            : [
+                {
+                  label: 'Reschedule',
+                  onClick: () =>
+                    dispatch(eventsRescheduled({date: currentDate})),
+                },
+              ]
+        }
+      />
     </StyledContainer>
   );
 };
