@@ -10,4 +10,12 @@ export interface CalendarEvent {
   };
   allDay: boolean;
   calendarId: string;
+  available: 'busy' | 'free';
+}
+
+export interface EventTimeSlot {
+  start: string;
+  end: string;
+  type: 'busy' | 'free' | 'unknown';
+  claimed: boolean;
 }

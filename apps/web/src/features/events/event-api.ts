@@ -10,35 +10,70 @@ const eventsApi = api.injectEndpoints({
       CalendarEvent[],
       {calendarIds?: string[]; currentDate?: string; view?: string}
     >({
-      query: ({calendarIds, currentDate, view}) => ({
-        url: '/events',
-        method: 'GET',
-        params: {
-          calendarIds: calendarIds?.join(','),
-          currentDate: currentDate || new Date().toISOString(),
-          view: view || 'Day',
-        },
-      }),
-      async onQueryStarted(_arg, {queryFulfilled, dispatch}) {
-        console.log('onQueryStarted');
-        const result = await queryFulfilled;
+      queryFn: async (arg, queryApi, _extraOptions, baseQuery) => {
+        const result = await baseQuery({
+          url: '/events',
+          method: 'GET',
+          params: {
+            calendarIds: arg.calendarIds?.join(','),
+            currentDate: arg.currentDate || new Date().toISOString(),
+            view: arg.view || 'Day',
+          },
+        });
 
         if (result.meta?.response?.status === 200) {
-          dispatch(eventsListStateUpdated(reqStateSuccess(result.data)));
+          queryApi.dispatch(
+            eventsListStateUpdated(
+              reqStateSuccess(result.data as CalendarEvent[]),
+            ),
+          );
         } else {
-          dispatch(
+          queryApi.dispatch(
             eventsListStateUpdated(
               reqStateFailure(new Error('Error loading events')),
             ),
           );
         }
+
+        return {
+          data: result.data as CalendarEvent[],
+        };
       },
-      transformResponse: (response: {data: CalendarEvent[]}) => response.data,
       providesTags: ['CalendarEvents'],
+    }),
+    eventsReschedule: builder.mutation<CalendarEvent[], CalendarEvent[]>({
+      queryFn: async (arg, queryApi, _extraOptions, baseQuery) => {
+        const result = await baseQuery({
+          url: '/events/reschedule',
+          method: 'POST',
+          body: {
+            events: arg,
+          },
+        });
+
+        if (result.meta?.response?.status === 200) {
+          queryApi.dispatch(
+            eventsListStateUpdated(
+              reqStateSuccess(result.data as CalendarEvent[]),
+            ),
+          );
+        } else {
+          queryApi.dispatch(
+            eventsListStateUpdated(
+              reqStateFailure(new Error('Error loading events')),
+            ),
+          );
+        }
+
+        return {
+          data: result.data as CalendarEvent[],
+        };
+      },
     }),
   }),
 });
 
-export const {useEventsQuery, useLazyEventsQuery} = eventsApi;
+export const {useEventsQuery, useLazyEventsQuery, useEventsRescheduleMutation} =
+  eventsApi;
 
 export default eventsApi;

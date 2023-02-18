@@ -1,9 +1,23 @@
 import {styled} from '@mui/material/styles';
+import {getWeekDates} from 'common/week/getWeekDays';
 import {calendarListStateSelector} from 'features/calendarList/calendarList-state';
-import {eventsListStateSelector} from 'features/events/events-state';
+import eventsApi from 'features/events/event-api';
+import {
+  eventsHasBackupSelector,
+  eventsListStateSelector,
+  eventsRescheduled,
+  eventsRestoreBackup,
+} from 'features/events/events-state';
 import {useStoreDispatch, useStoreSelector} from 'lib/store/store-hooks';
+import moment from 'moment';
 import {FC, useMemo} from 'react';
-import {Box, Calendar, CalendarAppointment, CalendarResource} from 'ui';
+import {
+  Box,
+  Calendar,
+  CalendarAppointment,
+  CalendarResource,
+  FloatButton,
+} from 'ui';
 import {
   calendarCurrentDateChanged,
   calendarCurrentDateSelector,
@@ -16,6 +30,7 @@ const CalendarModule: FC = () => {
   const eventsState = useStoreSelector(eventsListStateSelector);
   const currentDate = useStoreSelector(calendarCurrentDateSelector);
   const currentView = useStoreSelector(calendarCurrentViewSelector);
+  const hasBackup = useStoreSelector(eventsHasBackupSelector);
 
   const dispatch = useStoreDispatch();
 
@@ -32,7 +47,7 @@ const CalendarModule: FC = () => {
             calendarId: item.calendarId,
           } as CalendarAppointment),
       ) || [],
-    [eventsState.body],
+    [eventsState],
   );
 
   const resources: CalendarResource[] = useMemo(
@@ -55,15 +70,56 @@ const CalendarModule: FC = () => {
     <StyledContainer>
       <Calendar
         currentDate={currentDate}
-        onCurrentDateChange={date =>
-          dispatch(calendarCurrentDateChanged(date.toISOString()))
-        }
+        onCurrentDateChange={date => {
+          dispatch(calendarCurrentDateChanged(date.toISOString()));
+        }}
         currentViewName={currentView}
-        onCurrentViewNameChange={view =>
-          dispatch(calendarCurrentViewChanged(view))
-        }
+        onCurrentViewNameChange={view => {
+          dispatch(calendarCurrentDateChanged(getWeekDates(currentDate).first));
+          dispatch(calendarCurrentViewChanged(view));
+        }}
         appointments={appointments}
         resources={resources}
+      />
+      <FloatButton
+        items={
+          hasBackup
+            ? [
+                {
+                  label: 'Restore',
+                  onClick: () => dispatch(eventsRestoreBackup()),
+                },
+                {
+                  label: 'Create',
+                  onClick: () =>
+                    dispatch(
+                      eventsApi.endpoints.eventsReschedule.initiate(
+                        eventsState.body?.filter(x =>
+                          moment(x.start.dateTime).isSame(currentDate, 'day'),
+                        ) || [],
+                      ),
+                    ),
+                },
+              ]
+            : [
+                {
+                  label: 'Reschedule',
+                  onClick: () =>
+                    dispatch(eventsRescheduled({date: currentDate})),
+                },
+                {
+                  label: 'Create',
+                  onClick: () =>
+                    dispatch(
+                      eventsApi.endpoints.eventsReschedule.initiate(
+                        eventsState.body?.filter(x =>
+                          moment(x.start.dateTime).isSame(currentDate, 'day'),
+                        ) || [],
+                      ),
+                    ),
+                },
+              ]
+        }
       />
     </StyledContainer>
   );

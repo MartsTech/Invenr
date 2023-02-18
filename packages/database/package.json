@@ -23,15 +23,15 @@
     "studio": "prisma studio"
   },
   "dependencies": {
-    "@prisma/client": "^4.9.0"
+    "@prisma/client": "^4.10.1"
   },
   "devDependencies": {
-    "@types/node": "^18.11.19",
-    "eslint": "^8.33.0",
-    "prisma": "^4.9.0",
+    "@types/node": "^18.14.0",
+    "eslint": "^8.34.0",
+    "prisma": "^4.10.1",
     "rimraf": "^4.1.2",
-    "tsup": "^6.5.0",
-    "tsx": "^3.12.2",
+    "tsup": "^6.6.3",
+    "tsx": "^3.12.3",
     "typescript": "^4.9.5"
   }
 }

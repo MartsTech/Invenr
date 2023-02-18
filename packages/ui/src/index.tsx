@@ -5,5 +5,6 @@ export * from './button';
 export * from './calendar';
 export * from './drawer';
 export * from './dropdown';
+export * from './float';
 export * from './navigation';
 export * from './theme';
