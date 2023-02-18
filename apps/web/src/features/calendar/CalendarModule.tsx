@@ -10,7 +10,7 @@ import {
 } from 'features/events/events-state';
 import {useStoreDispatch, useStoreSelector} from 'lib/store/store-hooks';
 import moment from 'moment';
-import {FC, useEffect, useMemo, useState} from 'react';
+import {FC, useMemo} from 'react';
 import {
   Box,
   Calendar,
@@ -34,7 +34,21 @@ const CalendarModule: FC = () => {
 
   const dispatch = useStoreDispatch();
 
-  const [appointments, setAppointments] = useState<CalendarAppointment[]>([]);
+  const appointments: CalendarAppointment[] = useMemo(
+    () =>
+      eventsState.body?.map(
+        item =>
+          ({
+            id: item.id,
+            startDate: item.start.dateTime,
+            endDate: item.end.dateTime,
+            title: item.summary,
+            allDay: item.allDay,
+            calendarId: item.calendarId,
+          } as CalendarAppointment),
+      ) || [],
+    [eventsState],
+  );
 
   const resources: CalendarResource[] = useMemo(
     () => [
@@ -52,29 +66,11 @@ const CalendarModule: FC = () => {
     [calendarListState.body],
   );
 
-  useEffect(() => {
-    setAppointments(
-      eventsState.body?.map(
-        item =>
-          ({
-            id: item.id,
-            startDate: item.start.dateTime,
-            endDate: item.end.dateTime,
-            title: item.summary,
-            allDay: item.allDay,
-            calendarId: item.calendarId,
-          } as CalendarAppointment),
-      ) || [],
-    );
-  }, [eventsState.body]);
-
   return (
     <StyledContainer>
       <Calendar
         currentDate={currentDate}
         onCurrentDateChange={date => {
-          console.warn(date.toISOString());
-
           dispatch(calendarCurrentDateChanged(date.toISOString()));
         }}
         currentViewName={currentView}

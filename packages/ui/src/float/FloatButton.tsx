@@ -53,7 +53,7 @@ export const FloatButton: React.FC<FloatButtonProps> = ({items}) => {
 
 const StyledFloat = styled(Fab)(({theme}) => ({
   position: 'fixed',
-  bottom: theme.spacing(2),
+  bottom: theme.spacing(8),
   right: theme.spacing(2),
   animation: `$float 2s ${theme.transitions.easing.easeInOut} infinite`,
 

@@ -1,3 +1,4 @@
+import {styled} from '@mui/material';
 import MuiBottomNavigation, {
   BottomNavigationProps as MuiButtomNavigationProps,
 } from '@mui/material/BottomNavigation';
@@ -21,7 +22,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
   ...props
 }) => {
   return (
-    <MuiBottomNavigation {...props} showLabels value={currentIndex}>
+    <StyledBottomNavigation {...props} showLabels value={currentIndex}>
       {items.map(item => (
         <BottomNavigationAction
           key={item.label}
@@ -30,6 +31,14 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
           onClick={item.onClick}
         />
       ))}
-    </MuiBottomNavigation>
+    </StyledBottomNavigation>
   );
 };
+
+const StyledBottomNavigation = styled(MuiBottomNavigation)`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+`;
