@@ -1,6 +1,7 @@
 import {styled} from '@mui/material/styles';
 import {getWeekDates} from 'common/week/getWeekDays';
 import {calendarListStateSelector} from 'features/calendarList/calendarList-state';
+import eventsApi from 'features/events/event-api';
 import {
   eventsHasBackupSelector,
   eventsListStateSelector,
@@ -8,6 +9,7 @@ import {
   eventsRestoreBackup,
 } from 'features/events/events-state';
 import {useStoreDispatch, useStoreSelector} from 'lib/store/store-hooks';
+import moment from 'moment';
 import {FC, useEffect, useMemo, useState} from 'react';
 import {
   Box,
@@ -91,12 +93,34 @@ const CalendarModule: FC = () => {
                   label: 'Restore',
                   onClick: () => dispatch(eventsRestoreBackup()),
                 },
+                {
+                  label: 'Create',
+                  onClick: () =>
+                    dispatch(
+                      eventsApi.endpoints.eventsReschedule.initiate(
+                        eventsState.body?.filter(x =>
+                          moment(x.start.dateTime).isSame(currentDate, 'day'),
+                        ) || [],
+                      ),
+                    ),
+                },
               ]
             : [
                 {
                   label: 'Reschedule',
                   onClick: () =>
                     dispatch(eventsRescheduled({date: currentDate})),
+                },
+                {
+                  label: 'Create',
+                  onClick: () =>
+                    dispatch(
+                      eventsApi.endpoints.eventsReschedule.initiate(
+                        eventsState.body?.filter(x =>
+                          moment(x.start.dateTime).isSame(currentDate, 'day'),
+                        ) || [],
+                      ),
+                    ),
                 },
               ]
         }
