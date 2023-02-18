@@ -26,10 +26,10 @@ export const eventsReducer = createReducer(initialState, builder => {
     state.listState = {
       ...state.listState,
       body: [
-        ...(state.listState.body || []),
-        ...(action.payload.body || []).filter(
-          e => !state.listState.body?.find(e2 => e2.id === e.id),
-        ),
+        // ...(state.listState.body || []).filter(
+        //   x => !action.payload.body?.find(y => x.id === y.id),
+        // ),
+        ...(action.payload.body || []),
       ],
     };
   });
@@ -40,7 +40,7 @@ export const eventsPersistedReducer = persistReducer(
   {
     key: 'events',
     storage: storage,
-    whitelist: ['listState'],
+    whitelist: [''],
   },
   eventsReducer,
 );

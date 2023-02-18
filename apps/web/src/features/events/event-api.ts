@@ -2,6 +2,7 @@ import {api} from 'lib/api';
 import {reqStateFailure, reqStateSuccess} from 'lib/store/store-utils';
 import {eventsListStateUpdated} from './events-state';
 import type {CalendarEvent} from './events-types';
+import {resolveScheduleConflicts} from './events-utils';
 
 const eventsApi = api.injectEndpoints({
   endpoints: builder => ({
@@ -10,30 +11,37 @@ const eventsApi = api.injectEndpoints({
       CalendarEvent[],
       {calendarIds?: string[]; currentDate?: string; view?: string}
     >({
-      query: ({calendarIds, currentDate, view}) => ({
-        url: '/events',
-        method: 'GET',
-        params: {
-          calendarIds: calendarIds?.join(','),
-          currentDate: currentDate || new Date().toISOString(),
-          view: view || 'Day',
-        },
-      }),
-      async onQueryStarted(_arg, {queryFulfilled, dispatch}) {
-        console.log('onQueryStarted');
-        const result = await queryFulfilled;
+      queryFn: async (arg, queryApi, _extraOptions, baseQuery) => {
+        const result = await baseQuery({
+          url: '/events',
+          method: 'GET',
+          params: {
+            calendarIds: arg.calendarIds?.join(','),
+            currentDate: arg.currentDate || new Date().toISOString(),
+            view: arg.view || 'Day',
+          },
+        });
+
+        resolveScheduleConflicts(result.data as CalendarEvent[]);
 
         if (result.meta?.response?.status === 200) {
-          dispatch(eventsListStateUpdated(reqStateSuccess(result.data)));
+          queryApi.dispatch(
+            eventsListStateUpdated(
+              reqStateSuccess(result.data as CalendarEvent[]),
+            ),
+          );
         } else {
-          dispatch(
+          queryApi.dispatch(
             eventsListStateUpdated(
               reqStateFailure(new Error('Error loading events')),
             ),
           );
         }
+
+        return {
+          data: result.data as CalendarEvent[],
+        };
       },
-      transformResponse: (response: {data: CalendarEvent[]}) => response.data,
       providesTags: ['CalendarEvents'],
     }),
   }),

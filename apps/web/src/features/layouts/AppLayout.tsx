@@ -1,4 +1,5 @@
 import CalendarIcon from '@mui/icons-material/CalendarToday';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import Logout from '@mui/icons-material/Logout';
 import Box from '@mui/material/Box';
 import {styled} from '@mui/system';
@@ -37,6 +38,11 @@ export const AppLayout: React.FC<AppLayoutProps> = ({title, children}) => {
         label: 'Calendar',
         icon: <CalendarIcon />,
         onClick: () => router.push('/calendar'),
+      },
+      {
+        label: 'Dashboard',
+        icon: <DashboardIcon />,
+        onClick: () => router.push('/dashboard'),
       },
     ],
     [router],
@@ -85,11 +91,11 @@ export const AppLayout: React.FC<AppLayoutProps> = ({title, children}) => {
   );
 };
 
-const StyledWrapper = styled(Box)({
+const StyledWrapper = styled(Box)(({theme}) => ({
   height: '100vh',
   width: '100vw',
   display: 'flex',
-});
+}));
 
 const StyledDrawer = styled(Drawer)(({theme}) => ({
   [theme.breakpoints.down('sm')]: {

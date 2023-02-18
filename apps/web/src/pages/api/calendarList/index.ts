@@ -48,11 +48,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       primary: item.primary || false,
     })) ?? [];
 
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=10, stale-while-revalidate=59',
-  );
-
   res.status(200).json({data});
 };
 
