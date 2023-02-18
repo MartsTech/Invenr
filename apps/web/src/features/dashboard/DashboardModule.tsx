@@ -12,33 +12,44 @@ import TextField from '@mui/material/TextField';
 import {AdapterMoment} from '@mui/x-date-pickers/AdapterMoment';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {StaticDatePicker} from '@mui/x-date-pickers/StaticDatePicker';
+import {
+  calendarCurrentDateChanged,
+  calendarCurrentDateSelector,
+} from 'features/calendar/calendar-state';
 import {calendarListStateSelector} from 'features/calendarList/calendarList-state';
 import {eventsListStateSelector} from 'features/events/events-state';
-import {useStoreSelector} from 'lib/store/store-hooks';
+import {useStoreDispatch, useStoreSelector} from 'lib/store/store-hooks';
+import moment from 'moment';
 import {useMemo} from 'react';
 import {Box} from 'ui';
 
 const DashboardModule = () => {
+  const dispatch = useStoreDispatch();
+
   const calendarList = useStoreSelector(calendarListStateSelector);
   const events = useStoreSelector(eventsListStateSelector);
 
-  const first = useMemo(() => {
-    let calendars: {[key: string]: {count: number}} = {};
+  const currentDate = useStoreSelector(calendarCurrentDateSelector);
 
-    events.body?.forEach(event => {
-      if (!calendars[event.calendarId]) {
-        calendars[event.calendarId] = {
-          count: 0,
-        };
-      }
-      calendars[event.calendarId].count++;
-    });
+  const calendars = useMemo(() => {
+    let data: {[key: string]: {count: number}} = {};
 
-    return Object.entries(calendars).map(([name, {count}]) => ({
+    events.body
+      ?.filter(x => moment(x.start.dateTime).isSame(currentDate, 'day'))
+      .forEach(event => {
+        if (!data[event.calendarId]) {
+          data[event.calendarId] = {
+            count: 0,
+          };
+        }
+        data[event.calendarId].count++;
+      });
+
+    return Object.entries(data).map(([name, {count}]) => ({
       name: calendarList.body?.find(calendar => calendar.id === name)?.summary,
       count,
     }));
-  }, [events, calendarList]);
+  }, [events, calendarList, currentDate]);
 
   return (
     <Paper>
@@ -48,14 +59,16 @@ const DashboardModule = () => {
             <StaticDatePicker
               orientation="landscape"
               openTo="day"
-              value={new Date().toISOString()}
-              onChange={() => console.log('change')}
+              value={currentDate}
+              onChange={value =>
+                value && dispatch(calendarCurrentDateChanged(value))
+              }
               renderInput={params => <TextField {...params} />}
             />
           </LocalizationProvider>
         </StyledContainer>
         <StyledContainer>
-          <Chart data={first}>
+          <Chart data={calendars}>
             <Title text={'All Calendars'} />
             <PieSeries
               name="All Calendars"
