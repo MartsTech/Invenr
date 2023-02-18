@@ -1,1 +1,5 @@
-export {FloatButton} from './FloatButton';
+export {
+  FloatButton,
+  type FloatButtonItem,
+  type FloatButtonProps,
+} from './FloatButton';
