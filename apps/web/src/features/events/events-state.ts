@@ -26,9 +26,9 @@ export const eventsReducer = createReducer(initialState, builder => {
     state.listState = {
       ...state.listState,
       body: [
-        // ...(state.listState.body || []).filter(
-        //   x => !action.payload.body?.find(y => x.id === y.id),
-        // ),
+        ...(state.listState.body || []).filter(
+          x => !action.payload.body?.find(y => x.id === y.id),
+        ),
         ...(action.payload.body || []),
       ],
     };

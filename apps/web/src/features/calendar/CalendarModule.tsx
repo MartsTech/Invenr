@@ -1,4 +1,5 @@
 import {styled} from '@mui/material/styles';
+import {getWeekDates} from 'common/week/getWeekDays';
 import {calendarListStateSelector} from 'features/calendarList/calendarList-state';
 import {eventsListStateSelector} from 'features/events/events-state';
 import {useStoreDispatch, useStoreSelector} from 'lib/store/store-hooks';
@@ -38,7 +39,7 @@ const CalendarModule: FC = () => {
             calendarId: item.calendarId,
           } as CalendarAppointment),
       ) || [],
-    [eventsState],
+    [eventsState.body],
   );
 
   const resources: CalendarResource[] = useMemo(
@@ -54,20 +55,23 @@ const CalendarModule: FC = () => {
           })) || [],
       } as CalendarResource,
     ],
-    [calendarListState],
+    [calendarListState.body],
   );
 
   return (
     <StyledContainer>
       <Calendar
         currentDate={currentDate}
-        onCurrentDateChange={date =>
-          dispatch(calendarCurrentDateChanged(date.toISOString()))
-        }
+        onCurrentDateChange={date => {
+          console.warn(date.toISOString());
+
+          dispatch(calendarCurrentDateChanged(date.toISOString()));
+        }}
         currentViewName={currentView}
-        onCurrentViewNameChange={view =>
-          dispatch(calendarCurrentViewChanged(view))
-        }
+        onCurrentViewNameChange={view => {
+          dispatch(calendarCurrentDateChanged(getWeekDates(currentDate).first));
+          dispatch(calendarCurrentViewChanged(view));
+        }}
         appointments={appointments}
         resources={resources}
       />

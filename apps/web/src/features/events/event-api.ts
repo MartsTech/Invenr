@@ -2,7 +2,6 @@ import {api} from 'lib/api';
 import {reqStateFailure, reqStateSuccess} from 'lib/store/store-utils';
 import {eventsListStateUpdated} from './events-state';
 import type {CalendarEvent} from './events-types';
-import {resolveScheduleConflicts} from './events-utils';
 
 const eventsApi = api.injectEndpoints({
   endpoints: builder => ({
@@ -21,8 +20,6 @@ const eventsApi = api.injectEndpoints({
             view: arg.view || 'Day',
           },
         });
-
-        resolveScheduleConflicts(result.data as CalendarEvent[]);
 
         if (result.meta?.response?.status === 200) {
           queryApi.dispatch(
@@ -43,6 +40,9 @@ const eventsApi = api.injectEndpoints({
         };
       },
       providesTags: ['CalendarEvents'],
+      forceRefetch() {
+        return true;
+      },
     }),
   }),
 });
