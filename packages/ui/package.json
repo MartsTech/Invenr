@@ -22,7 +22,7 @@
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
     "@mui/x-date-pickers": "^5.0.18",
-    "@mui/material": "^5.11.7"
+    "@mui/material": "^5.11.8"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
