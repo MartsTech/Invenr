@@ -29,7 +29,7 @@
     "eslint": "^8.34.0",
     "eslint-config-next": "^13.2.4",
     "eslint-config-prettier": "^8.6.0",
-    "eslint-config-turbo": "^0.0.8",
+    "eslint-config-turbo": "^1.8.6",
     "husky": "^8.0.3",
     "prettier": "^2.8.4",
     "turbo": "1.8.3"
