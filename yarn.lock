@@ -1482,10 +1482,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@googleapis/calendar@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@googleapis/calendar/-/calendar-4.0.0.tgz#ea8fa11c8e19cac10623ffb7a2c02c7392f9848e"
-  integrity sha512-4z1e0Wh1FIfeubDkjyVCouAFpHBbG08geYtq9Fk22XF97+T1N8XhY2DcIjUHmGtU1LIYw3bbv5Oe5dV99IgTYg==
+"@googleapis/calendar@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@googleapis/calendar/-/calendar-5.0.0.tgz#c13bf01b6881f2f808aaf4c7ea6a798f93b8d6b0"
+  integrity sha512-ZKiqTzNlu/pcRlYjH5StEIlHv2lBwoIqJSukp9ocNkBjBk8FbYisZxW+jAie9VT17TL64mLq/3k0Ow1WzS6/ZQ==
   dependencies:
     googleapis-common "^6.0.3"
 
