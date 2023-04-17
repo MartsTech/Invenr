@@ -24,7 +24,7 @@
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.9",
     "@mui/x-date-pickers": "^5.0.20",
-    "@mui/material": "^5.11.10"
+    "@mui/material": "^5.12.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
